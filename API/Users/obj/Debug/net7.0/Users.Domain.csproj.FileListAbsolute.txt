@@ -1,0 +1,12 @@
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\bin\Debug\net7.0\Users.Domain.deps.json
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\bin\Debug\net7.0\Users.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\bin\Debug\net7.0\Users.Domain.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\Users.Domain.csproj.AssemblyReference.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\Users.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\Users.Domain.AssemblyInfoInputs.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\Users.Domain.AssemblyInfo.cs
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\Users.Domain.csproj.CoreCompileInputs.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\Users.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\refint\Users.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\Users.Domain.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\ref\Users.Domain.dll

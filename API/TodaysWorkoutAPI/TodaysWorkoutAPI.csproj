@@ -16,9 +16,15 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.Services.csproj" />
+    <ProjectReference Include="..\Exercises.Controllers\Exercises.Controllers.csproj" />
+    <ProjectReference Include="..\Exercises.Domain\Exercises.Domain.csproj" />
+    <ProjectReference Include="..\Exercises.Services\Exercises.Services.csproj" />
     <ProjectReference Include="..\Users.Controllers\Users.Controllers.csproj" />
     <ProjectReference Include="..\Users.Services\Users.Services.csproj" />
     <ProjectReference Include="..\Users\Users.Domain.csproj" />
+    <ProjectReference Include="..\Workouts.Controllers\Workouts.Controllers.csproj" />
+    <ProjectReference Include="..\Workouts.Domain\Workouts.Domain.csproj" />
+    <ProjectReference Include="..\Workouts.Services\Workouts.Services.csproj" />
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,15 @@
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\bin\Debug\net7.0\Workouts.Domain.deps.json
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\bin\Debug\net7.0\Workouts.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\bin\Debug\net7.0\Workouts.Domain.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\bin\Debug\net7.0\Exercises.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\bin\Debug\net7.0\Exercises.Domain.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\Workouts.Domain.csproj.AssemblyReference.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\Workouts.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\Workouts.Domain.AssemblyInfoInputs.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\Workouts.Domain.AssemblyInfo.cs
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\Workouts.Domain.csproj.CoreCompileInputs.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\Workouts.Domain.csproj.CopyComplete
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\Workouts.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\refint\Workouts.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\Workouts.Domain.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Workouts.Domain\obj\Debug\net7.0\ref\Workouts.Domain.dll

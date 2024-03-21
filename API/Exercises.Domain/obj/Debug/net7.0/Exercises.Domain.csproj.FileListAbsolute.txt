@@ -1,0 +1,12 @@
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\bin\Debug\net7.0\Exercises.Domain.deps.json
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\bin\Debug\net7.0\Exercises.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\bin\Debug\net7.0\Exercises.Domain.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\obj\Debug\net7.0\Exercises.Domain.csproj.AssemblyReference.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\obj\Debug\net7.0\Exercises.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\obj\Debug\net7.0\Exercises.Domain.AssemblyInfoInputs.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\obj\Debug\net7.0\Exercises.Domain.AssemblyInfo.cs
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\obj\Debug\net7.0\Exercises.Domain.csproj.CoreCompileInputs.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\obj\Debug\net7.0\Exercises.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\obj\Debug\net7.0\refint\Exercises.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\obj\Debug\net7.0\Exercises.Domain.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Exercises.Domain\obj\Debug\net7.0\ref\Exercises.Domain.dll

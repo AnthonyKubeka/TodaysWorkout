@@ -1,6 +1,10 @@
 using Common;
+using Exercises.Domain;
+using Exercises.Services;
 using Microsoft.Azure.Cosmos;
 using Users.Services;
+using Workouts.Domain;
+using Workouts.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -9,15 +13,26 @@ builder.Services.AddSwaggerGen();
 
 if (builder.Environment.IsDevelopment())
 { //use local SecretManager
+    string url = builder.Configuration["TWURL"];
+    string primaryKey = builder.Configuration["TWPrimaryKey"];
+    string dbName = builder.Configuration["TWDatabaseName"];
+
     builder.Services.AddSingleton<ICosmosDbService<Users.Domain.User>>(options =>
     {
-        string url = builder.Configuration["TWURL"];
-        string primaryKey = builder.Configuration["TWPrimaryKey"];
-        string dbName = builder.Configuration["TWDatabaseName"];
-        string containerName = "Users"; 
         var cosmosClient = new CosmosClient(url, primaryKey);
+        return new UsersCosmosDbService(cosmosClient, dbName, "Users");
+    });
 
-        return new UsersCosmosDbService(cosmosClient, dbName, containerName);
+    builder.Services.AddSingleton<ICosmosDbService<Exercise>>(options =>
+    {
+        var cosmosClient = new CosmosClient(url, primaryKey);
+        return new ExercisesCosmosDbService(cosmosClient, dbName, "Exercises");
+    });
+
+    builder.Services.AddSingleton<ICosmosDbService<Workout>>(options =>
+    {
+        var cosmosClient = new CosmosClient(url, primaryKey);
+        return new WorkoutsCosmosDbService(cosmosClient, dbName, "Workouts");
     });
 }
 

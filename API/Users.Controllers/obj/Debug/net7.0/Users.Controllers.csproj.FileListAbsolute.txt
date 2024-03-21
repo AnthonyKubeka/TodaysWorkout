@@ -10,3 +10,13 @@ C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\obj\Debug\net7.0\Us
 C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\obj\Debug\net7.0\refint\Users.Controllers.dll
 C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\obj\Debug\net7.0\Users.Controllers.pdb
 C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\obj\Debug\net7.0\ref\Users.Controllers.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\bin\Debug\net7.0\Microsoft.Azure.Cosmos.ServiceInterop.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\bin\Debug\net7.0\Cosmos.CRTCompat.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\bin\Debug\net7.0\msvcp140.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\bin\Debug\net7.0\vcruntime140.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\bin\Debug\net7.0\vcruntime140_1.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\bin\Debug\net7.0\Common.Services.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\bin\Debug\net7.0\Users.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\bin\Debug\net7.0\Common.Services.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\bin\Debug\net7.0\Users.Domain.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Users.Controllers\obj\Debug\net7.0\Users.Controllers.csproj.CopyComplete

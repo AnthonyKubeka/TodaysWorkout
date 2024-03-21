@@ -1,15 +1,29 @@
+using Common;
+using Microsoft.Azure.Cosmos;
+using Users.Services;
+
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+if (builder.Environment.IsDevelopment())
+{ //use local SecretManager
+    builder.Services.AddSingleton<ICosmosDbService<Users.Domain.User>>(options =>
+    {
+        string url = builder.Configuration["TWURL"];
+        string primaryKey = builder.Configuration["TWPrimaryKey"];
+        string dbName = builder.Configuration["TWDatabaseName"];
+        string containerName = "Users"; 
+        var cosmosClient = new CosmosClient(url, primaryKey);
+
+        return new UsersCosmosDbService(cosmosClient, dbName, containerName);
+    });
+}
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -17,9 +31,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();

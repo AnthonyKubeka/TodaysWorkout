@@ -8,6 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Core" Version="2.2.5" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.38.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Common\Common.Services.csproj" />
+    <ProjectReference Include="..\Users\Users.Domain.csproj" />
   </ItemGroup>
 
 </Project>

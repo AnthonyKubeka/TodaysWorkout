@@ -10,3 +10,8 @@ C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\Users.Domain.d
 C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\refint\Users.Domain.dll
 C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\Users.Domain.pdb
 C:\MyProgrammingProjects\TodaysWorkout\API\Users\obj\Debug\net7.0\ref\Users.Domain.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\bin\Debug\net7.0\Microsoft.Azure.Cosmos.ServiceInterop.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\bin\Debug\net7.0\Cosmos.CRTCompat.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\bin\Debug\net7.0\msvcp140.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\bin\Debug\net7.0\vcruntime140.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Users\bin\Debug\net7.0\vcruntime140_1.dll

@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-
+﻿using Common;
+using Microsoft.AspNetCore.Mvc;
+using Users.Domain; 
 namespace Users.Controllers
 {
     [ApiController]
@@ -8,10 +8,30 @@ namespace Users.Controllers
 
     public class UserController : ControllerBase
     {
-        [HttpGet(Name = "GetUserByName/{name}")]
-        public ActionResult GetUserByName(string name) 
+        private readonly ICosmosDbService<User> _usersCosmosDbService; 
+
+        public UserController(ICosmosDbService<User> usersCosmosDbService)
         {
-            return Ok(name); 
+            _usersCosmosDbService = usersCosmosDbService;
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser() 
+        {
+            var user = new User()
+            {
+                Id = Guid.NewGuid().ToString(),
+                UserName = "Jim"
+            }; 
+            await _usersCosmosDbService.AddAsync(user);
+            return Ok(user);
+        }
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUser(string id)
+        {
+            var user = await _usersCosmosDbService.GetAsync(id); 
+            return Ok(user);
         }
     }
 }

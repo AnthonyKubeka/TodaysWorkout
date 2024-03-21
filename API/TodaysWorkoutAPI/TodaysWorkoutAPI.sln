@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33424.131
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TodaysWorkoutAPI", "TodaysWorkoutAPI.csproj", "{8552B6B0-13D1-4AB2-81B3-8597ACC1B694}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodaysWorkoutAPI", "TodaysWorkoutAPI.csproj", "{8552B6B0-13D1-4AB2-81B3-8597ACC1B694}"
 	ProjectSection(ProjectDependencies) = postProject
 		{6F50705C-D7C9-4D54-8B4F-F5F0799DE1B7} = {6F50705C-D7C9-4D54-8B4F-F5F0799DE1B7}
 	EndProjectSection
@@ -12,11 +12,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Users", "Users", "{FC02A66D
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{AFEB13FC-C03D-4AED-AC1F-62EDAF72F024}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Users.Domain", "..\Users\Users.Domain.csproj", "{956EB0AC-90E9-4438-96EE-F3EEF0977129}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users.Domain", "..\Users\Users.Domain.csproj", "{956EB0AC-90E9-4438-96EE-F3EEF0977129}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Users.Services", "..\Users.Services\Users.Services.csproj", "{53B3AB71-42D3-4286-9418-69BCFFA4E814}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users.Services", "..\Users.Services\Users.Services.csproj", "{53B3AB71-42D3-4286-9418-69BCFFA4E814}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Users.Controllers", "..\Users.Controllers\Users.Controllers.csproj", "{6F50705C-D7C9-4D54-8B4F-F5F0799DE1B7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Users.Controllers", "..\Users.Controllers\Users.Controllers.csproj", "{6F50705C-D7C9-4D54-8B4F-F5F0799DE1B7}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Common", "Common", "{84FE643A-BCF5-43E8-B94C-AE36A76177EE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Services", "..\Common\Common.Services.csproj", "{380171FF-06F8-43D1-8FB3-C171FBF1B133}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -40,6 +44,10 @@ Global
 		{6F50705C-D7C9-4D54-8B4F-F5F0799DE1B7}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F50705C-D7C9-4D54-8B4F-F5F0799DE1B7}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F50705C-D7C9-4D54-8B4F-F5F0799DE1B7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{380171FF-06F8-43D1-8FB3-C171FBF1B133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{380171FF-06F8-43D1-8FB3-C171FBF1B133}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{380171FF-06F8-43D1-8FB3-C171FBF1B133}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{380171FF-06F8-43D1-8FB3-C171FBF1B133}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -49,6 +57,8 @@ Global
 		{956EB0AC-90E9-4438-96EE-F3EEF0977129} = {FC02A66D-271B-46FE-9E4D-CAE891B9400C}
 		{53B3AB71-42D3-4286-9418-69BCFFA4E814} = {FC02A66D-271B-46FE-9E4D-CAE891B9400C}
 		{6F50705C-D7C9-4D54-8B4F-F5F0799DE1B7} = {FC02A66D-271B-46FE-9E4D-CAE891B9400C}
+		{84FE643A-BCF5-43E8-B94C-AE36A76177EE} = {AFEB13FC-C03D-4AED-AC1F-62EDAF72F024}
+		{380171FF-06F8-43D1-8FB3-C171FBF1B133} = {84FE643A-BCF5-43E8-B94C-AE36A76177EE}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D4C85BBF-D8EF-4B96-87BF-396A5B546EE0}

@@ -1511,19 +1511,6 @@
         "runtime": {
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
-      },
-      "Exercises.Domain/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "Newtonsoft.Json": "10.0.2"
-        },
-        "compile": {
-          "bin/placeholder/Exercises.Domain.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Exercises.Domain.dll": {}
-        }
       }
     }
   },
@@ -5326,16 +5313,10 @@
         "system.xml.xmldocument.4.3.0.nupkg.sha512",
         "system.xml.xmldocument.nuspec"
       ]
-    },
-    "Exercises.Domain/1.0.0": {
-      "type": "project",
-      "path": "../Exercises.Domain/Exercises.Domain.csproj",
-      "msbuildProject": "../Exercises.Domain/Exercises.Domain.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "Exercises.Domain >= 1.0.0",
       "Newtonsoft.Json >= 10.0.2"
     ]
   },
@@ -5371,11 +5352,7 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {
-            "C:\\MyProgrammingProjects\\TodaysWorkout\\API\\Exercises.Domain\\Exercises.Domain.csproj": {
-              "projectPath": "C:\\MyProgrammingProjects\\TodaysWorkout\\API\\Exercises.Domain\\Exercises.Domain.csproj"
-            }
-          }
+          "projectReferences": {}
         }
       },
       "warningProperties": {

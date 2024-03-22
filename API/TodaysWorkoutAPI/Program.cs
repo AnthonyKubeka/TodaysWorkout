@@ -1,10 +1,10 @@
-using Common;
-using Exercises.Domain;
-using Exercises.Services;
 using Microsoft.Azure.Cosmos;
-using Users.Services;
-using Workouts.Domain;
-using Workouts.Services;
+using TodaysWorkoutAPI.Common.Services;
+using TodaysWorkoutAPI.Users.Services;
+using TodaysWorkoutAPI.Exercises.Domain;
+using TodaysWorkoutAPI.Exercises.Services;
+using TodaysWorkoutAPI.Workouts.Domain;
+using TodaysWorkoutAPI.Workouts.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -17,7 +17,7 @@ if (builder.Environment.IsDevelopment())
     string primaryKey = builder.Configuration["TWPrimaryKey"];
     string dbName = builder.Configuration["TWDatabaseName"];
 
-    builder.Services.AddSingleton<ICosmosDbService<Users.Domain.User>>(options =>
+    builder.Services.AddSingleton<ICosmosDbService<TodaysWorkoutAPI.Users.Domain.User>>(options =>
     {
         var cosmosClient = new CosmosClient(url, primaryKey);
         return new UsersCosmosDbService(cosmosClient, dbName, "Users");

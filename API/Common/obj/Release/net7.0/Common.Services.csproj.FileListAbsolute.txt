@@ -1,0 +1,17 @@
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\bin\Release\net7.0\Microsoft.Azure.Cosmos.ServiceInterop.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\bin\Release\net7.0\Cosmos.CRTCompat.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\bin\Release\net7.0\msvcp140.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\bin\Release\net7.0\vcruntime140.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\bin\Release\net7.0\vcruntime140_1.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\bin\Release\net7.0\Common.Services.deps.json
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\bin\Release\net7.0\Common.Services.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\bin\Release\net7.0\Common.Services.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\obj\Release\net7.0\Common.Services.csproj.AssemblyReference.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\obj\Release\net7.0\Common.Services.GeneratedMSBuildEditorConfig.editorconfig
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\obj\Release\net7.0\Common.Services.AssemblyInfoInputs.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\obj\Release\net7.0\Common.Services.AssemblyInfo.cs
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\obj\Release\net7.0\Common.Services.csproj.CoreCompileInputs.cache
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\obj\Release\net7.0\Common.Services.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\obj\Release\net7.0\refint\Common.Services.dll
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\obj\Release\net7.0\Common.Services.pdb
+C:\MyProgrammingProjects\TodaysWorkout\API\Common\obj\Release\net7.0\ref\Common.Services.dll

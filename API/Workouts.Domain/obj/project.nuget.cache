@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "QEJMgMcgGBtjB1P+s04c8tFusuT2JQtuE5Rt+ql7E1e+cWseV/nySEK4hvzkRw96S4DBtJrV53OnxJhrFzd3+Q==",
+  "dgSpecHash": "KcfhYe6hGXPVJMn9PwmLpwUicdlgAdWR2vWrzp5KowoPmWHHoSWDibswQyBo2OYzw56BSyS5wBIj3M09igOiUQ==",
   "success": true,
   "projectFilePath": "C:\\MyProgrammingProjects\\TodaysWorkout\\API\\Workouts.Domain\\Workouts.Domain.csproj",
   "expectedPackageFiles": [

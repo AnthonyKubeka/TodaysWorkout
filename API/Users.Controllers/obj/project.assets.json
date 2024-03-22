@@ -2341,19 +2341,6 @@
           "lib/netstandard1.3/System.Xml.XmlDocument.dll": {}
         }
       },
-      "Common.Services/1.0.0": {
-        "type": "project",
-        "framework": ".NETCoreApp,Version=v7.0",
-        "dependencies": {
-          "Microsoft.Azure.Cosmos": "3.38.1"
-        },
-        "compile": {
-          "bin/placeholder/Common.Services.dll": {}
-        },
-        "runtime": {
-          "bin/placeholder/Common.Services.dll": {}
-        }
-      },
       "Users.Domain/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v7.0",
@@ -7205,11 +7192,6 @@
         "system.xml.xmldocument.nuspec"
       ]
     },
-    "Common.Services/1.0.0": {
-      "type": "project",
-      "path": "../Common/Common.Services.csproj",
-      "msbuildProject": "../Common/Common.Services.csproj"
-    },
     "Users.Domain/1.0.0": {
       "type": "project",
       "path": "../Users/Users.Domain.csproj",
@@ -7218,7 +7200,6 @@
   },
   "projectFileDependencyGroups": {
     "net7.0": [
-      "Common.Services >= 1.0.0",
       "Microsoft.AspNetCore.Mvc.Core >= 2.2.5",
       "Microsoft.Azure.Cosmos >= 3.38.1",
       "Users.Domain >= 1.0.0"
@@ -7257,9 +7238,6 @@
         "net7.0": {
           "targetAlias": "net7.0",
           "projectReferences": {
-            "C:\\MyProgrammingProjects\\TodaysWorkout\\API\\Common\\Common.Services.csproj": {
-              "projectPath": "C:\\MyProgrammingProjects\\TodaysWorkout\\API\\Common\\Common.Services.csproj"
-            },
             "C:\\MyProgrammingProjects\\TodaysWorkout\\API\\Users\\Users.Domain.csproj": {
               "projectPath": "C:\\MyProgrammingProjects\\TodaysWorkout\\API\\Users\\Users.Domain.csproj"
             }

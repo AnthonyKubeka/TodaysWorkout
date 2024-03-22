@@ -11,20 +11,9 @@
     <PackageReference Include="Azure.Extensions.AspNetCore.Configuration.Secrets" Version="1.3.1" />
     <PackageReference Include="Azure.Identity" Version="1.10.4" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.3" />
+    <PackageReference Include="Microsoft.Azure.Cosmos" Version="3.38.1" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.4.0" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Common\Common.Services.csproj" />
-    <ProjectReference Include="..\Exercises.Controllers\Exercises.Controllers.csproj" />
-    <ProjectReference Include="..\Exercises.Domain\Exercises.Domain.csproj" />
-    <ProjectReference Include="..\Exercises.Services\Exercises.Services.csproj" />
-    <ProjectReference Include="..\Users.Controllers\Users.Controllers.csproj" />
-    <ProjectReference Include="..\Users.Services\Users.Services.csproj" />
-    <ProjectReference Include="..\Users\Users.Domain.csproj" />
-    <ProjectReference Include="..\Workouts.Controllers\Workouts.Controllers.csproj" />
-    <ProjectReference Include="..\Workouts.Domain\Workouts.Domain.csproj" />
-    <ProjectReference Include="..\Workouts.Services\Workouts.Services.csproj" />
   </ItemGroup>
 
 </Project>

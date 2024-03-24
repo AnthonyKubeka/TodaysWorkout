@@ -42,5 +42,19 @@ namespace TodaysWorkoutAPI.Exercises
             var exercise = await _exercisesCosmosDbService.GetAsync(id);
             return Ok(exercise);
         }
+
+        [HttpGet("exercise-data")]
+        public async Task<IActionResult> GetExerciseData()
+        {
+            var exerciseList = new List<ExerciseStaticDetail>();
+            exerciseList.Add(new ExerciseStaticDetail()
+            {
+                BodyParts = new List<BodyPartEnum> { BodyPartEnum.Legs },
+                Id = Guid.NewGuid().ToString(),
+                Name = "Squats"
+            });
+
+            return Ok(exerciseList); 
+        }
     }
 }

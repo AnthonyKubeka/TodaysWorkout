@@ -2,6 +2,14 @@
   "dependencies": {
     "apis1": {
       "type": "apis"
+    },
+    "cosmosdb1": {
+      "type": "cosmosdb",
+      "connectionId": "TWConnectionStrings"
+    },
+    "secrets1": {
+      "type": "secrets",
+      "connectionId": "VaultUri"
     }
   }
 }

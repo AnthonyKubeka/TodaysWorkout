@@ -1,2 +1,11 @@
-<button class="btn">Button</button>
+<div [ngSwitch]="currentView$ | async">
+  <div *ngSwitchCase="ViewEnum.Home">
+    <app-home></app-home>
+  </div>
+<p *ngSwitchCase="ViewEnum.Build">
+  BUILD!
+</p>
+<p *ngSwitchDefault>
 
+</p>
+</div>

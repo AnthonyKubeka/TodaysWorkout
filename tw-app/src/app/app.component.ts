@@ -5,11 +5,13 @@ import { Observable } from 'rxjs';
 import { HomeComponent } from '../home/home.component';
 import { NavigateService } from './common/navigate.service';
 import { ViewEnum } from './common/view.enum';
+import { BuildComponent } from './build/build.component';
+import { StoreService } from './common/store.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomeComponent, CommonModule],
+  imports: [RouterOutlet, HomeComponent, CommonModule, BuildComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -18,11 +20,12 @@ export class AppComponent {
   title = 'tw-app';
   ViewEnum = ViewEnum;
   currentView$: Observable<ViewEnum>;
-  constructor(private navigateService: NavigateService) {
+  constructor(private navigateService: NavigateService, private storeService: StoreService) {
     this.currentView$ = this.navigateService.currentView$;
    }
-  ngOnInit(): void {
 
+  ngOnInit(): void {
+    this.storeService.init();
   }
 }
 

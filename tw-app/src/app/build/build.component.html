@@ -1,0 +1,15 @@
+<div class="flex flex-col items-center justify-center h-screen">
+  <h1 class="text-4xl font-bold uppercase mb-8 text-center">Build Today's Session</h1>
+  <button class="btn btn-circle btn-lg text-xl">
+    <span class="uppercase" (click)="showForm()">Add exercises</span>
+  </button>
+  <button class="btn btn-circle btn-lg text-xl">
+    <span class="uppercase" (click)="navigate(ViewEnum.Build)">Add sets</span>
+  </button>
+  <button class="btn btn-circle btn-lg text-xl">
+    <span class="uppercase" (click)="navigate(ViewEnum.Build)">Go!</span>
+  </button>
+</div>
+<ng-container *ngIf="staticExercises$ | async as staticExercises">
+  <app-add-exercises [staticExercises]="staticExercises"></app-add-exercises>
+</ng-container>

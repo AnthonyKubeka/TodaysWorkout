@@ -1,5 +1,5 @@
 import { NavigateService } from './../app/common/navigate.service';
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { ViewEnum } from '../app/common/view.enum';
 
 @Component({
@@ -11,12 +11,10 @@ import { ViewEnum } from '../app/common/view.enum';
 })
 export class HomeComponent {
   ViewEnum = ViewEnum;
-  @Output() start = new EventEmitter<void>();
 
   constructor(private navigateService: NavigateService) { }
 
-navigate(view: ViewEnum) {
-  this.navigateService.navigateTo(view);
-}
-
+  navigate(view: ViewEnum) {
+    this.navigateService.navigateTo(view);
+  }
 }

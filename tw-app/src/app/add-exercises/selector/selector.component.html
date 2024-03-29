@@ -1,0 +1,4 @@
+<span class="label-text">Select an exercise</span>
+<select [formControl]="exerciseOption" class="select select-bordered w-full max-w-xs">
+  <option *ngFor="let exercise of exercises" [ngValue]="exercise">{{exercise.name}}</option>
+</select>

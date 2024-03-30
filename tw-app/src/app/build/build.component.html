@@ -4,10 +4,7 @@
     <span class="uppercase" (click)="showForm()">Add exercises</span>
   </button>
   <button class="btn btn-circle btn-lg text-xl">
-    <span class="uppercase" (click)="navigate(ViewEnum.Build)">Add sets</span>
-  </button>
-  <button class="btn btn-circle btn-lg text-xl">
-    <span class="uppercase" (click)="navigate(ViewEnum.Build)">Go!</span>
+    <span class="uppercase" (click)="navigate(ViewEnum.Workout)">Go!</span>
   </button>
 </div>
 <ng-container *ngIf="staticExercises$ | async as staticExercises">

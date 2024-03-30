@@ -18,9 +18,9 @@ export class BuildComponent {
 
   ViewEnum = ViewEnum;
   @ViewChild(AddExercisesComponent)
-  addExercisesComponent: AddExercisesComponent = new AddExercisesComponent;
+  addExercisesComponent: AddExercisesComponent | undefined;
   staticExercises$: Observable<Exercise[]>;
-  constructor(private navigateService: NavigateService, storeService: StoreService) {
+  constructor(private navigateService: NavigateService, private storeService: StoreService) {
     this.staticExercises$ = storeService.getStaticExercises();
   }
 
@@ -33,6 +33,7 @@ export class BuildComponent {
   }
 
   showForm(){
-    this.addExercisesComponent.toggleShowForm();
+    if (this.addExercisesComponent)
+      this.addExercisesComponent.toggleShowForm();
   }
 }

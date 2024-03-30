@@ -1,4 +1,11 @@
-<span class="label-text">Select an exercise</span>
-<select [formControl]="exerciseOption" class="select select-bordered w-full max-w-xs">
-  <option *ngFor="let exercise of exercises" [ngValue]="exercise">{{exercise.name}}</option>
-</select>
+<div class="flex flex-col">
+  <span class="label-text">Select an exercise</span>
+  <select [formControl]="exerciseOption" class="select select-bordered w-full max-w-xs">
+    <option *ngFor="let exercise of exercises" [ngValue]="exercise">{{exercise.name}}</option>
+  </select>
+  <div class="flex flex-row">
+    <input type="number" min="1" [formControl]="setsInput" placeholder="Sets" class="input input-bordered input-xs w-1/4" />
+    <input type="number" min="1" [formControl]="repsInput" placeholder="Reps" class="input input-bordered input-xs w-1/4" />
+  </div>
+</div>
+

@@ -22,6 +22,9 @@ export class SelectorComponent implements ControlValueAccessor{
   @Input() exercises: Exercise[] = [];
   private selectedExercise: Exercise | null;
   exerciseOption = new FormControl({value: this.exercises[0], disabled: false});
+  setsInput = new FormControl({value: '', disabled: false});
+  repsInput = new FormControl({value: '', disabled: false});
+
   touched: boolean = false;
   disabled: boolean = false;
 
@@ -37,6 +40,14 @@ export class SelectorComponent implements ControlValueAccessor{
       this.selectedExercise = selectedExercise;
       this.onChange(selectedExercise);
       this.markAsTouched();
+    });
+
+    this.setsInput.valueChanges.subscribe(() => {
+      console.log(this.setsInput.value);
+    });
+
+    this.repsInput.valueChanges.subscribe(() => {
+      console.log(this.repsInput.value);
     });
 
   }

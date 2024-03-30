@@ -1,4 +1,5 @@
 export enum ViewEnum {
   Home,
-  Build
+  Build,
+  Workout
 }

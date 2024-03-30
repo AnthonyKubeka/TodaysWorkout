@@ -1,0 +1,11 @@
+  <div class="modal" [ngClass]="{'modal-open': showForm}">
+    <div class="modal-box">
+    <div class="form-group flex flex-col items-center">
+      @for (selector of selectors; track selector) {
+        <app-selector [exercises]="staticExercises"></app-selector>
+      }
+        <button class="btn btn-circle btn-lg text-xl" (click)="addExerciseSelector()">+</button>
+      <button class="btn" (click)="toggleShowForm()">Done</button>
+    </div>
+  </div>
+  </div>

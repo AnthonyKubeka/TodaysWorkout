@@ -1,0 +1,12 @@
+<div class="flex flex-col">
+  <h1 class="text-4xl font-bold uppercase mb-8 text-center">Let's Work</h1>
+
+  <div class="flex flex-col items-center">
+    <ul class="steps steps-vertical">
+      @for (exercise of exercises; track exercise) {
+        <li class="step step-primary">{{exercise.name}}</li>
+      }
+    </ul>
+  </div>
+
+</div>

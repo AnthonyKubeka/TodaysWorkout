@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { FormControl, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Exercise } from '../common/exercise';
 import { SelectorComponent } from './selector/selector.component';
 
@@ -14,8 +14,22 @@ import { SelectorComponent } from './selector/selector.component';
 export class AddExercisesComponent {
 
   @Input() staticExercises: Exercise[] = [];
-  selectors: number[] = [1];
   showForm: boolean = false;
+
+  selectorsFormArray = new FormArray([
+   this.createSelectorFormControl()
+  ]);
+
+  addExercisesForm: FormGroup = new FormGroup({
+    selectorsFormGroup: this.selectorsFormArray
+  })
+
+  constructor(){
+  }
+
+  createSelectorFormControl() {
+    return new FormControl();
+  }
 
   ngOnChanges(changes: SimpleChanges): void {
   }
@@ -25,6 +39,6 @@ export class AddExercisesComponent {
   }
 
   addExerciseSelector() {
-    this.selectors.push(this.selectors.length + 1);
+    this.selectorsFormArray.push(this.createSelectorFormControl());
     }
 }

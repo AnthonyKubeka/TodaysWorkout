@@ -4,6 +4,8 @@ import { StoreService } from '../common/store.service';
 import { CommonModule } from '@angular/common';
 import { Observable, of, map } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NavigateService } from '../common/navigate.service';
+import { ViewEnum } from '../common/view.enum';
 
 @Component({
   selector: 'app-workout',
@@ -16,7 +18,7 @@ export class WorkoutComponent {
   workoutForm!: FormGroup;
   exercises$: Observable<Exercise[]> = of([]);
 
-  constructor(private storeService: StoreService, private fb: FormBuilder){}
+  constructor(private storeService: StoreService, private fb: FormBuilder, private navigateService: NavigateService){}
 
   ngOnInit(): void {
     this.exercises$ = this.storeService.getExercises();
@@ -26,10 +28,13 @@ export class WorkoutComponent {
     });
 
     this.exercises$.subscribe(exercises => {
+      if(exercises){
+        exercises[0].pending = true;
+      }
       exercises.forEach((exercise, index) =>{
         this.stepsFormArray.push(this.createStepFormGroup(exercise))
       })
-    })
+    }).unsubscribe();
   }
 
   get stepsFormArray(){
@@ -64,7 +69,7 @@ export class WorkoutComponent {
     this.stepsFormArray.at(index+1).get('pending')?.setValue(true);
   }
 
-  getSetsAsArray(sets: number){
-    return Array.from({ length: sets }, (_, index) => index + 1);
+  back(){
+    this.navigateService.navigateTo(ViewEnum.Home);
   }
 }

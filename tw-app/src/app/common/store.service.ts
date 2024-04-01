@@ -16,22 +16,14 @@ export class StoreService {
   }
 
   init() {
-    //this would be done in subscription of observable network request
-
     this.staticExercisesSubject.next([
       { id: 1, name: 'Pushups', sets: 3, reps: 15 },
       { id: 2, name: 'Squats', sets: 3, reps: 10 },
       { id: 3, name: 'Situps', sets: 3, reps: 20 },
     ]);
-
-    this.exercisesSubject.next([
-      { id: 1, name: 'Pushups', sets: 3, reps: 15, pending: true },
-      { id: 2, name: 'Squats', sets: 3, reps: 10 },
-      { id: 3, name: 'Situps', sets: 3, reps: 20 },
-    ])
   }
 
-  saveWorkoutSession(exercises: Exercise[]) {
+  updateExercises(exercises: Exercise[]) {
     this.exercisesSubject.next(exercises);
   }
 

@@ -1,4 +1,4 @@
-<div class="flex flex-col" [formGroup]="workoutForm">
+<div class="flex flex-col items-center justify-center h-screen" [formGroup]="workoutForm">
   <h1 class="text-4xl font-bold uppercase mb-8 text-center">Let's Work</h1>
 
   <div formArrayName="stepsFormArray" class="flex flex-col items-center">
@@ -32,5 +32,13 @@
 
       </li>
     </ul>
+  </div>
+  <div class="flex flex-row">
+    <button class="btn btn-circle btn-lg text-xl mx-4">
+      <span class="uppercase" (click)="back()">Go Back</span>
+    </button>
+    <button class="btn btn-circle btn-lg text-xl mx-4">
+      <span class="uppercase" (click)="back()">Finish workout</span>
+    </button>
   </div>
 </div>

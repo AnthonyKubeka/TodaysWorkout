@@ -62,7 +62,7 @@ export class AddExercisesComponent {
       };
     });
 
-    this.storeService.saveWorkoutSession(exercisesToSave);
+    this.storeService.updateExercises(exercisesToSave);
     this.toggleShowForm();
   }
 }

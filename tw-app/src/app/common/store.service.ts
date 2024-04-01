@@ -23,9 +23,15 @@ export class StoreService {
       { id: 2, name: 'Squats', sets: 3, reps: 10 },
       { id: 3, name: 'Situps', sets: 3, reps: 20 },
     ]);
+
+    this.exercisesSubject.next([
+      { id: 1, name: 'Pushups', sets: 3, reps: 15, pending: true },
+      { id: 2, name: 'Squats', sets: 3, reps: 10 },
+      { id: 3, name: 'Situps', sets: 3, reps: 20 },
+    ])
   }
 
-  saveExerciseSession(exercises: Exercise[]) {
+  saveWorkoutSession(exercises: Exercise[]) {
     this.exercisesSubject.next(exercises);
   }
 

@@ -1,7 +1,7 @@
 import { Exercise } from './../common/exercise';
 import { CommonModule } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreService } from '../common/store.service';
 
 @Component({
@@ -62,7 +62,7 @@ export class AddExercisesComponent {
       };
     });
 
-    this.storeService.saveExerciseSession(exercisesToSave);
-
+    this.storeService.saveWorkoutSession(exercisesToSave);
+    this.toggleShowForm();
   }
 }

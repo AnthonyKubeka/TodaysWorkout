@@ -16,8 +16,6 @@ export class StoreService {
   }
 
   init() {
-    //this would be done in subscription of observable network request
-
     this.staticExercisesSubject.next([
       { id: 1, name: 'Pushups', sets: 3, reps: 15 },
       { id: 2, name: 'Squats', sets: 3, reps: 10 },
@@ -25,7 +23,7 @@ export class StoreService {
     ]);
   }
 
-  saveExerciseSession(exercises: Exercise[]) {
+  updateExercises(exercises: Exercise[]) {
     this.exercisesSubject.next(exercises);
   }
 
@@ -33,7 +31,7 @@ export class StoreService {
     return this.staticExercises$;
   }
 
-  getExercises(): Exercise[] {
-    return this.exercisesSubject.getValue();
+  getExercises(): Observable<Exercise[]> {
+    return this.exercises$;
   }
 }

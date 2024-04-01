@@ -33,7 +33,7 @@ export class StoreService {
     return this.staticExercises$;
   }
 
-  getExercises(): Exercise[] {
-    return this.exercisesSubject.getValue();
+  getExercises(): Observable<Exercise[]> {
+    return this.exercises$;
   }
 }

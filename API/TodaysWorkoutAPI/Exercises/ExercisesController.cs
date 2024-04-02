@@ -9,9 +9,9 @@ namespace TodaysWorkoutAPI.Exercises
 
     public class ExercisesController : ControllerBase
     {
-        private readonly ICosmosDbService<Exercise> _exercisesCosmosDbService;
+        private readonly CosmosDbService<Exercise> _exercisesCosmosDbService;
 
-        public ExercisesController(ICosmosDbService<Exercise> exercisesCosmosDbService)
+        public ExercisesController(CosmosDbService<Exercise> exercisesCosmosDbService)
         {
             _exercisesCosmosDbService = exercisesCosmosDbService;
         }
@@ -46,15 +46,9 @@ namespace TodaysWorkoutAPI.Exercises
         [HttpGet("exercise-data")]
         public async Task<IActionResult> GetExerciseData()
         {
-            var exerciseList = new List<ExerciseStaticDetail>();
-            exerciseList.Add(new ExerciseStaticDetail()
-            {
-                BodyParts = new List<BodyPartEnum> { BodyPartEnum.Legs },
-                Id = Guid.NewGuid().ToString(),
-                Name = "Squats"
-            });
-
-            return Ok(exerciseList); 
+            var query = "SELECT * FROM c WHERE c.id = 'exercise-data'";
+            var exercises = await _exercisesCosmosDbService.GetGenericData();
+            return Ok(exercises); 
         }
     }
 }

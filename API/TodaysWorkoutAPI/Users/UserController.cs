@@ -8,9 +8,9 @@ namespace TodaysWorkoutAPI.Users.Controllers
 
     public class UserController : ControllerBase
     {
-        private readonly ICosmosDbService<User> _usersCosmosDbService; 
+        private readonly CosmosDbService<User> _usersCosmosDbService; 
 
-        public UserController(ICosmosDbService<User> usersCosmosDbService)
+        public UserController(CosmosDbService<User> usersCosmosDbService)
         {
             _usersCosmosDbService = usersCosmosDbService;
         }

@@ -9,9 +9,9 @@ namespace TodaysWorkoutAPI.Workouts.Controllers
 
     public class WorkoutsController : ControllerBase
     {
-        private readonly ICosmosDbService<Workout> _workoutsCosmosDbService; 
+        private readonly CosmosDbService<Workout> _workoutsCosmosDbService; 
 
-        public WorkoutsController(ICosmosDbService<Workout> workoutsCosmosDbService)
+        public WorkoutsController(CosmosDbService<Workout> workoutsCosmosDbService)
         {
             _workoutsCosmosDbService = workoutsCosmosDbService;
         }

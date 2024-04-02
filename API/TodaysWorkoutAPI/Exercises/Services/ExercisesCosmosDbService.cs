@@ -4,7 +4,7 @@ using TodaysWorkoutAPI.Exercises.Domain;
 
 namespace TodaysWorkoutAPI.Exercises.Services
 {
-    public class ExercisesCosmosDbService : ICosmosDbService<Exercise>
+    public class ExercisesCosmosDbService : CosmosDbService<Exercise>
     {
         private Container _container; 
 
@@ -13,7 +13,7 @@ namespace TodaysWorkoutAPI.Exercises.Services
             _container = cosmosDbClient.GetContainer(databaseName, containerName);
         }
 
-        public async Task AddAsync(Exercise exercise)
+        public override async Task AddAsync(Exercise exercise)
         {
             try
             {
@@ -27,12 +27,12 @@ namespace TodaysWorkoutAPI.Exercises.Services
             
         }
 
-        public async Task DeleteAsync(string id)
+        public override async Task DeleteAsync(string id)
         {
             await _container.DeleteItemAsync<Exercise>(id, new PartitionKey(id)); 
         }
 
-        public async Task<Exercise> GetAsync(string id)
+        public override async Task<Exercise> GetAsync(string id)
         {
             try
             {
@@ -45,7 +45,7 @@ namespace TodaysWorkoutAPI.Exercises.Services
             }
         }
 
-        public async Task<IEnumerable<Exercise>> GetMultipleAsync(string queryString)
+        public override async Task<IEnumerable<Exercise>> GetMultipleAsync(string queryString)
         {
             var query = _container.GetItemQueryIterator<Exercise>(new QueryDefinition(queryString));
             List<Exercise> results = new List<Exercise>();
@@ -59,7 +59,34 @@ namespace TodaysWorkoutAPI.Exercises.Services
             return results;
         }
 
-        public async Task UpdateAsync(string id, Exercise exercise)
+        public override async Task<IEnumerable<Dictionary<string, object>>> GetGenericData()
+        {
+            string queryString = "SELECT c.exerciseStaticDetails FROM c WHERE c.id = 'exercise-data'";
+            var query = _container.GetItemQueryIterator<dynamic>(new QueryDefinition(queryString));
+
+            List<Dictionary<string, object>> results = new List<Dictionary<string, object>>();
+
+            if (query.HasMoreResults)
+            {
+                var response = await query.ReadNextAsync();
+
+                foreach (var item in response)
+                {
+                    if (item.exerciseStaticDetails != null)
+                    {
+                        foreach (var detail in item.exerciseStaticDetails)
+                        {
+                            var exerciseDetail = detail.ToObject<Dictionary<string, object>>();
+                            results.Add(exerciseDetail);
+                        }
+                    }
+                }
+            }
+
+            return results;
+        }
+
+        public override async Task UpdateAsync(string id, Exercise exercise)
         {
             await _container.UpsertItemAsync<Exercise>(exercise, new PartitionKey(id));
         }

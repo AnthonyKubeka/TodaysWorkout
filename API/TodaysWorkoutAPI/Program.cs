@@ -20,19 +20,19 @@ if (builder.Environment.IsDevelopment())
     string primaryKey = builder.Configuration["TWPrimaryKey"];
     string dbName = builder.Configuration["TWDatabaseName"];
 
-    builder.Services.AddSingleton<ICosmosDbService<TodaysWorkoutAPI.Users.Domain.User>>(options =>
+    builder.Services.AddSingleton<CosmosDbService<TodaysWorkoutAPI.Users.Domain.User>>(options =>
     {
         var cosmosClient = new CosmosClient(url, primaryKey);
         return new UsersCosmosDbService(cosmosClient, dbName, "Users");
     });
 
-    builder.Services.AddSingleton<ICosmosDbService<Exercise>>(options =>
+    builder.Services.AddSingleton<CosmosDbService<Exercise>>(options =>
     {
         var cosmosClient = new CosmosClient(url, primaryKey);
         return new ExercisesCosmosDbService(cosmosClient, dbName, "Exercises");
     });
 
-    builder.Services.AddSingleton<ICosmosDbService<Workout>>(options =>
+    builder.Services.AddSingleton<CosmosDbService<Workout>>(options =>
     {
         var cosmosClient = new CosmosClient(url, primaryKey);
         return new WorkoutsCosmosDbService(cosmosClient, dbName, "Workouts");
@@ -46,19 +46,19 @@ if (builder.Environment.IsProduction())
     string primaryKey = builder.Configuration["TWPrimaryKey"];
     string dbName = builder.Configuration["TWDatabaseName"];
 
-    builder.Services.AddSingleton<ICosmosDbService<TodaysWorkoutAPI.Users.Domain.User>>(options =>
+    builder.Services.AddSingleton<CosmosDbService<TodaysWorkoutAPI.Users.Domain.User>>(options =>
     {
         var cosmosClient = new CosmosClient(url, primaryKey);
         return new UsersCosmosDbService(cosmosClient, dbName, "Users");
     });
 
-    builder.Services.AddSingleton<ICosmosDbService<Exercise>>(options =>
+    builder.Services.AddSingleton<CosmosDbService<Exercise>>(options =>
     {
         var cosmosClient = new CosmosClient(url, primaryKey);
         return new ExercisesCosmosDbService(cosmosClient, dbName, "Exercises");
     });
 
-    builder.Services.AddSingleton<ICosmosDbService<Workout>>(options =>
+    builder.Services.AddSingleton<CosmosDbService<Workout>>(options =>
     {
         var cosmosClient = new CosmosClient(url, primaryKey);
         return new WorkoutsCosmosDbService(cosmosClient, dbName, "Workouts");

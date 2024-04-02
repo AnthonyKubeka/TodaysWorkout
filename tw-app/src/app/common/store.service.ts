@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, startWith } from 'rxjs';
+import { BehaviorSubject, Observable, map, tap } from 'rxjs';
 import { Exercise } from './exercise';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -12,15 +13,39 @@ export class StoreService {
   staticExercises$ = this.staticExercisesSubject.asObservable();
   exercises$ = this.exercisesSubject.asObservable();
 
-  constructor() {
+  constructor(private httpClient: HttpClient) {
   }
 
   init() {
-    this.staticExercisesSubject.next([
-      { id: 1, name: 'Pushups', sets: 3, reps: 15 },
-      { id: 2, name: 'Squats', sets: 3, reps: 10 },
-      { id: 3, name: 'Situps', sets: 3, reps: 20 },
-    ]);
+    const staticExercisesReq$ = this.getStaticExerciseData();
+
+    staticExercisesReq$.subscribe({
+      next: (exercises: Exercise[]) => {
+        this.staticExercisesSubject.next(exercises);
+      },
+      error: (error) => {
+        console.error('Could not fetch static data due to error:', error);
+      }
+    }
+    );
+  }
+
+  private getStaticExerciseData(): Observable<Exercise[]> {
+    let headers: HttpHeaders = new HttpHeaders();
+    headers = headers.append('Accept', 'application/json');
+
+    return this.httpClient.get<Exercise[]>(
+      'https://todaysworkoutapi.azurewebsites.net/Exercises/exercise-data',
+      { headers: headers }
+    ).pipe(
+      map((res: any[]) => res.map(item => ({
+        ...item,
+        sets: 3,
+        reps: 10,
+        pending: false,
+        complete: false
+      })))
+    );
   }
 
   updateExercises(exercises: Exercise[]) {

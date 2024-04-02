@@ -4,7 +4,7 @@ using TodaysWorkoutAPI.Workouts.Domain;
 
 namespace TodaysWorkoutAPI.Workouts.Services
 {
-    public class WorkoutsCosmosDbService : ICosmosDbService<Workout>
+    public class WorkoutsCosmosDbService : CosmosDbService<Workout>
     {
         private Container _container; 
 
@@ -14,7 +14,7 @@ namespace TodaysWorkoutAPI.Workouts.Services
         }
 
 
-        public async Task AddAsync(Workout workout)
+        public override async Task AddAsync(Workout workout)
         {
             try
             {
@@ -26,12 +26,12 @@ namespace TodaysWorkoutAPI.Workouts.Services
             }
         }
 
-        public async Task DeleteAsync(string id)
+        public override async Task DeleteAsync(string id)
         {
             await _container.DeleteItemAsync<Workout>(id, new PartitionKey(id)); 
         }
 
-        public async Task<Workout> GetAsync(string id)
+        public override async Task<Workout> GetAsync(string id)
         {
             try
             {
@@ -44,7 +44,12 @@ namespace TodaysWorkoutAPI.Workouts.Services
             }
         }
 
-        public async Task<IEnumerable<Workout>> GetMultipleAsync(string queryString)
+        public override Task<IEnumerable<Dictionary<string, object>>> GetGenericData()
+        {
+            throw new NotImplementedException();
+        }
+
+        public override async Task<IEnumerable<Workout>> GetMultipleAsync(string queryString)
         {
             var query = _container.GetItemQueryIterator<Workout>(new QueryDefinition(queryString));
             List<Workout> results = new List<Workout>();
@@ -58,7 +63,7 @@ namespace TodaysWorkoutAPI.Workouts.Services
             return results;
         }
 
-        public async Task UpdateAsync(string id, Workout workout)
+        public override async Task UpdateAsync(string id, Workout workout)
         {
             await _container.UpsertItemAsync<Workout>(workout, new PartitionKey(id));
         }

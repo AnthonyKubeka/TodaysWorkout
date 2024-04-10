@@ -1,16 +1,25 @@
 <div [formGroup]="addExercisesForm" class="modal" [ngClass]="{'modal-open': showForm}">
-  <div class="modal-box">
+  <div class="modal-box bg-gray-800">
     <div class="flex flex-col items-center">
       <div formArrayName="selectorsFormArray">
         <div *ngFor="let selectorControl of selectorsFormArray.controls; let i = index" [formGroupName]="i">
           <div class="flex flex-col">
-            <span class="label-text">Select an exercise</span>
-            <select formControlName="exerciseOption" class="select select-bordered w-full max-w-xs my-2">
-              <option *ngFor="let exercise of staticExercises" [ngValue]="exercise">{{exercise.name}}</option>
-            </select>
+            <span class="label-text">Select an exercise or type to search</span>
+
+            <ng-select [items]="staticExercises "
+            bindLabel="name"
+            formControlName="exerciseOption"
+            class="w-full py-2 bg-gray-800"
+            notFoundText="No exercise found"
+            appendTo="body"
+            (open)="toggleInputsEnabled(i)"
+            (close)="toggleInputsEnabled(i)"
+            >
+            </ng-select>
+
             <div class="flex flex-row">
-              <input type="number" min="1" formControlName="setsInput" placeholder="Sets" class="input input-bordered input-xs w-1/4 mb-2 mr-2" />
-              <input type="number" min="1" formControlName="repsInput" placeholder="Reps" class="input input-bordered input-xs w-1/4" />
+              <input type="number" min="1" [ngClass]="{'invisible': isInputsDisabled(i)}" formControlName="setsInput" placeholder="Sets" class="input input-bordered input-xs w-1/4 mb-2 mr-2" />
+              <input type="number" min="1" [ngClass]="{'invisible': isInputsDisabled(i)}" formControlName="repsInput" placeholder="Reps" class="input input-bordered input-xs w-1/4" />
             </div>
           </div>
         </div>

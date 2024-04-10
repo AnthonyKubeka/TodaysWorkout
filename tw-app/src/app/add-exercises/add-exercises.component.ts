@@ -3,15 +3,18 @@ import { CommonModule } from '@angular/common';
 import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { StoreService } from '../common/store.service';
-
+import { NgSelectModule } from '@ng-select/ng-select';
 @Component({
   selector: 'app-add-exercises',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, NgSelectModule],
   templateUrl: './add-exercises.component.html',
   styleUrl: './add-exercises.component.css'
 })
 export class AddExercisesComponent {
+disableInputs() {
+throw new Error('Method not implemented.');
+}
 
   @Input() staticExercises: Exercise[] = [];
   showForm: boolean = false;
@@ -49,6 +52,28 @@ export class AddExercisesComponent {
   addExerciseSelector() {
     this.selectorsFormArray.push(this.createSelectorFormControl());
     }
+
+    isInputsDisabled(selectorsFormArrayIndex: number): boolean {
+      const formGroup = this.selectorsFormArray.at(selectorsFormArrayIndex) as FormGroup;
+      const setsInput = formGroup.get('setsInput');
+      const repsInput = formGroup.get('repsInput');
+      return setsInput?.disabled && repsInput?.disabled;
+    }
+
+    toggleInputsEnabled(selectorsFormArrayIndex: number) {
+      const formGroup = this.selectorsFormArray.at(selectorsFormArrayIndex) as FormGroup;
+      const setsInput = formGroup.get('setsInput');
+      const repsInput = formGroup.get('repsInput');
+
+      if (this.isInputsDisabled(selectorsFormArrayIndex)) {
+        setsInput?.enable();
+        repsInput?.enable();
+      } else {
+        setsInput?.disable();
+        repsInput?.disable();
+      }
+    }
+
 
   save(){
     const formValues = this.addExercisesForm.value;

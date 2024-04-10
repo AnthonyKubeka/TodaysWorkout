@@ -12,6 +12,7 @@ export class StoreService {
   private exercisesSubject = new BehaviorSubject<Exercise[]>([]);
   staticExercises$ = this.staticExercisesSubject.asObservable();
   exercises$ = this.exercisesSubject.asObservable();
+  readonly defaultNumberOfSetsOrReps = 1;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -49,6 +50,15 @@ export class StoreService {
   }
 
   updateExercises(exercises: Exercise[]) {
+    exercises.forEach(exercise => {
+      if (!exercise.sets){
+        exercise.sets = this.defaultNumberOfSetsOrReps;
+      }
+
+      if (!exercise.reps){
+        exercise.reps = this.defaultNumberOfSetsOrReps;
+      }
+    });
     this.exercisesSubject.next(exercises);
   }
 

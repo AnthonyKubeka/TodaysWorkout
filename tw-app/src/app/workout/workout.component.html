@@ -10,9 +10,9 @@
         <div class="flex-col p-4">
           <div class="flex-row">
             {{ stepFormGroup.get('exercise')?.value}}:
-            <label class="label-text">{{stepFormGroup.get('reps')?.value}}</label>
+            <label class="label-text">{{stepFormGroup.get('targetRepsPerSet')?.value}}</label>
             <label class="label-text ml-1 mr-1">X</label>
-            <label class="label-text">{{stepFormGroup.get('sets')?.value}}</label>
+            <label class="label-text">{{stepFormGroup.get('targetSets')?.value}}</label>
           </div>
 
           <ng-container formArrayName="stepInformationFormArray">
@@ -38,7 +38,7 @@
       <span class="uppercase" (click)="back()">Go Back</span>
     </button>
     <button class="btn btn-circle btn-lg text-xl mx-4">
-      <span class="uppercase" (click)="back()">Finish workout</span>
+      <span class="uppercase" (click)="finish()">Finish workout</span>
     </button>
   </div>
 </div>

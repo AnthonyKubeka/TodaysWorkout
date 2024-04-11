@@ -8,11 +8,12 @@ import { ViewEnum } from './common/view.enum';
 import { BuildComponent } from './build/build.component';
 import { StoreService } from './common/store.service';
 import { WorkoutComponent } from './workout/workout.component';
+import { FinishWorkoutComponent } from './finish-workout/finish-workout.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, HomeComponent, CommonModule, BuildComponent, WorkoutComponent],
+  imports: [RouterOutlet, HomeComponent, CommonModule, BuildComponent, WorkoutComponent, FinishWorkoutComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })

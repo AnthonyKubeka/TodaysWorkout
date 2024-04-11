@@ -38,9 +38,6 @@ throw new Error('Method not implemented.');
     });
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-  }
-
   get selectorsFormArray(){
     return this.addExercisesForm.controls["selectorsFormArray"] as FormArray;
   }
@@ -82,8 +79,8 @@ throw new Error('Method not implemented.');
       return {
         id: selector.exerciseOption.id,
         name: selector.exerciseOption.name,
-        sets: selector.setsInput,
-        reps: selector.repsInput
+        targetSets: selector.setsInput,
+        targetRepsPerSet: selector.repsInput
       };
     });
 

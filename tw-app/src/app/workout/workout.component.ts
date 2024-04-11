@@ -2,7 +2,7 @@ import { Component, Input } from '@angular/core';
 import { Exercise } from '../common/exercise';
 import { StoreService } from '../common/store.service';
 import { CommonModule } from '@angular/common';
-import { Observable, of, map } from 'rxjs';
+import { Observable, of, map, take } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavigateService } from '../common/navigate.service';
 import { ViewEnum } from '../common/view.enum';
@@ -21,20 +21,20 @@ export class WorkoutComponent {
   constructor(private storeService: StoreService, private fb: FormBuilder, private navigateService: NavigateService){}
 
   ngOnInit(): void {
-    this.exercises$ = this.storeService.getExercises();
+    this.exercises$ = this.storeService.getExercises().pipe(take(1));
 
     this.workoutForm = this.fb.group({
       stepsFormArray: this.fb.array([])
     });
 
-    this.exercises$.subscribe(exercises => {
+    this.exercises$.pipe(take(1)).subscribe(exercises => {
       if(exercises){
         exercises[0].pending = true;
       }
-      exercises.forEach((exercise, index) =>{
+      exercises.forEach((exercise) =>{
         this.stepsFormArray.push(this.createStepFormGroup(exercise))
       })
-    }).unsubscribe();
+    });
   }
 
   get stepsFormArray(){
@@ -44,10 +44,10 @@ export class WorkoutComponent {
   createStepFormGroup(exercise: Exercise): FormGroup {
     return this.fb.group({
       exercise: exercise.name,
-      reps: exercise.reps,
-      sets: exercise.sets,
+      targetRepsPerSet: exercise.targetRepsPerSet,
+      targetSets: exercise.targetSets,
       pending: exercise.pending,
-      stepInformationFormArray: this.fb.array(this.initStepInformation(exercise.sets))
+      stepInformationFormArray: this.fb.array(this.initStepInformation(exercise.targetSets))
     })
   }
 
@@ -69,7 +69,32 @@ export class WorkoutComponent {
     this.stepsFormArray.at(index+1).get('pending')?.setValue(true);
   }
 
+  private save() {
+    const formValues = this.workoutForm.value;
+    const exercisesToSave: Exercise[] = formValues.stepsFormArray.map((step: any) => {
+      return {
+        name: step.exercise,
+        targetRepsPerSet: step.targetRepsPerSet,
+        targetSets: step.targetSets,
+        completedSets: step.stepInformationFormArray.map((set: any) => ({
+          reps: set.repsCompleted,
+          intensity: set.intensity
+        })),
+        pending: step.pending,
+        complete: step.complete
+      };
+    });
+
+    this.storeService.updateExercises(exercisesToSave);
+  }
+
+
   back(){
     this.navigateService.navigateTo(ViewEnum.Home);
+  }
+
+  finish(){
+    this.save();
+    this.navigateService.navigateTo(ViewEnum.Finish);
   }
 }

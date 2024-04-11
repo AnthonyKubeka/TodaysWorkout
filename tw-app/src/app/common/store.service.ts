@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, tap } from 'rxjs';
+import { BehaviorSubject, Observable, map, of, tap } from 'rxjs';
 import { Exercise } from './exercise';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -41,8 +41,9 @@ export class StoreService {
     ).pipe(
       map((res: any[]) => res.map(item => ({
         ...item,
-        sets: 3,
-        reps: 10,
+        targetSets: this.defaultNumberOfSetsOrReps,
+        targetRepsPerSet: this.defaultNumberOfSetsOrReps,
+        completedSets: [],
         pending: false,
         complete: false
       })))
@@ -51,12 +52,12 @@ export class StoreService {
 
   updateExercises(exercises: Exercise[]) {
     exercises.forEach(exercise => {
-      if (!exercise.sets){
-        exercise.sets = this.defaultNumberOfSetsOrReps;
+      if (!exercise.targetSets){
+        exercise.targetSets = this.defaultNumberOfSetsOrReps;
       }
 
-      if (!exercise.reps){
-        exercise.reps = this.defaultNumberOfSetsOrReps;
+      if (!exercise.targetRepsPerSet){
+        exercise.targetRepsPerSet = this.defaultNumberOfSetsOrReps;
       }
     });
     this.exercisesSubject.next(exercises);
@@ -68,5 +69,39 @@ export class StoreService {
 
   getExercises(): Observable<Exercise[]> {
     return this.exercises$;
+  }
+
+  getExercisesFake(): Observable<Exercise[]>{
+    const exercises: Exercise[] = [
+      {
+        id: 1,
+        name: 'Pushups',
+        targetSets: 3,
+        targetRepsPerSet: 10,
+        completedSets: [{reps: 1, intensity: 9}, {reps: 1, intensity: 9} ],
+        pending: false,
+        complete: false
+      },
+      {
+        id: 2,
+        name: 'Pull Ups',
+        targetSets: 3,
+        targetRepsPerSet: 8,
+        completedSets: [{reps: 1, intensity: 9}, {reps: 1, intensity: 9}, {reps: 1, intensity: 9}],
+        pending: false,
+        complete: false
+      },
+      {
+        id: 3,
+        name: 'Squats',
+        targetSets: 4,
+        targetRepsPerSet: 12,
+        completedSets: [{reps: 1, intensity: 9}],
+        pending: false,
+        complete: false
+      }
+    ];
+
+    return of(exercises);
   }
 }

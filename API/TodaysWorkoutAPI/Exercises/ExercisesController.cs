@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using System.Globalization;
 using TodaysWorkoutAPI.Common.Services;
 using TodaysWorkoutAPI.Exercises.Domain;
 
@@ -19,7 +20,8 @@ namespace TodaysWorkoutAPI.Exercises
         [HttpPost("add-exercise-data")]
         public async Task<IActionResult> AddStaticExerciseData([FromQuery] string exerciseName)
         {
-            var cleanedExerciseName = exerciseName.ToUpperInvariant(); 
+            var textInfo = new CultureInfo("en-US", false).TextInfo;
+            var cleanedExerciseName = textInfo.ToTitleCase(exerciseName.ToLower()); 
             await _exercisesCosmosDbService.AddGenericDataAsync(cleanedExerciseName);
             return Ok($"Received exercise name: {exerciseName}");
         }

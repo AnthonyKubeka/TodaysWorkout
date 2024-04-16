@@ -42,7 +42,7 @@ export class AddExercisesComponent {
   }
 
   addExerciseOption(exercise: string) {
-    this.storeService.updateStaticExerciseData(exercise);
+    this.storeService.updateStaticExerciseData(exercise).subscribe();
     }
 
   toggleShowForm() {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { Exercise } from './exercise';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
@@ -51,10 +51,18 @@ export class StoreService {
   }
 
   updateStaticExerciseData(exerciseName: string): Observable<any> {
-    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    let headers = new HttpHeaders({'Content-Type': 'application/json'});
+    headers = headers.append('Accept', 'application/json');
+
     const url = `https://todaysworkoutapi.azurewebsites.net/Exercises/add-exercise-data?exerciseName=${encodeURIComponent(exerciseName)}`;
 
     return this.httpClient.post(url, null, { headers: headers })
+    .pipe(
+      catchError(err => {
+        console.log('Error updating exercise data: ', err)
+        return of(null);
+      })
+    );
   }
 
   updateExercises(exercises: Exercise[]) {

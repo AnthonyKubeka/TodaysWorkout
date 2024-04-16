@@ -1,4 +1,5 @@
 ﻿using Microsoft.Azure.Cosmos;
+using Newtonsoft.Json.Linq;
 using TodaysWorkoutAPI.Common.Services;
 using TodaysWorkoutAPI.Exercises.Domain;
 
@@ -25,6 +26,33 @@ namespace TodaysWorkoutAPI.Exercises.Services
             }
             
             
+        }
+
+        public override async Task AddGenericDataAsync(string genericDataName)
+        {
+            string documentId = "exercise-data";
+            try
+            {
+                ItemResponse<dynamic> response = await _container.ReadItemAsync<dynamic>(documentId, new PartitionKey(documentId));
+                var document = response.Resource;
+                List<dynamic> exercises = new List<dynamic>(document.exerciseStaticDetails);
+                var maxId = exercises.Max(d => (int)d.id);
+
+                JObject newExercise = new JObject
+                {
+                    ["id"] = maxId + 1,
+                    ["name"] = genericDataName
+                };
+
+                exercises.Add(newExercise);
+                JArray updatedExercises = JArray.FromObject(exercises);
+                document.exerciseStaticDetails = updatedExercises; 
+                await _container.ReplaceItemAsync(document, documentId, new PartitionKey(documentId));
+            }
+            catch (CosmosException ex) when (ex.StatusCode == System.Net.HttpStatusCode.NotFound)
+            {
+                System.Console.WriteLine("Document not found.");
+            }
         }
 
         public override async Task DeleteAsync(string id)

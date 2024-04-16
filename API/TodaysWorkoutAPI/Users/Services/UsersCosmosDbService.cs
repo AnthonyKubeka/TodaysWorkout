@@ -28,6 +28,11 @@ namespace TodaysWorkoutAPI.Users.Services
             
         }
 
+        public override Task AddGenericDataAsync(string genericDataName)
+        {
+            throw new NotImplementedException();
+        }
+
         public override async Task DeleteAsync(string id)
         {
             await _container.DeleteItemAsync<User>(id, new PartitionKey(id)); 

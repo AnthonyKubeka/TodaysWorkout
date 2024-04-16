@@ -50,6 +50,13 @@ export class StoreService {
     );
   }
 
+  updateStaticExerciseData(exerciseName: string): Observable<any> {
+    const headers = new HttpHeaders({'Content-Type': 'application/json'});
+    const url = `https://todaysworkoutapi.azurewebsites.net/Exercises/add-exercise-data?exerciseName=${encodeURIComponent(exerciseName)}`;
+
+    return this.httpClient.post(url, null, { headers: headers })
+  }
+
   updateExercises(exercises: Exercise[]) {
     exercises.forEach(exercise => {
       if (!exercise.targetSets){

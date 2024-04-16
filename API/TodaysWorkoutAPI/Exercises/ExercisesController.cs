@@ -16,24 +16,12 @@ namespace TodaysWorkoutAPI.Exercises
             _exercisesCosmosDbService = exercisesCosmosDbService;
         }
 
-        [HttpPost]
-        public async Task<IActionResult> AddExercise()
+        [HttpPost("add-exercise-data")]
+        public async Task<IActionResult> AddStaticExerciseData([FromQuery] string exerciseName)
         {
-            var exercise = new Exercise()
-            {
-                Id = Guid.NewGuid().ToString(),
-                Name = "Pull Ups",
-                ExerciseStaticDetail = new ExerciseStaticDetail()
-                {
-                    Id = Guid.NewGuid().ToString(),
-                    BodyParts = new List<BodyPartEnum> { BodyPartEnum.Arms },
-                    Name = "Pull Ups"
-                },
-                Sets = 1,
-                Reps = 10
-            };
-            await _exercisesCosmosDbService.AddAsync(exercise);
-            return Ok(exercise);
+            var cleanedExerciseName = exerciseName.ToUpperInvariant(); 
+            await _exercisesCosmosDbService.AddGenericDataAsync(cleanedExerciseName);
+            return Ok($"Received exercise name: {exerciseName}");
         }
 
         [HttpGet("{id}")]

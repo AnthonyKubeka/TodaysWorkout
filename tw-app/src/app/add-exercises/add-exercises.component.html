@@ -12,14 +12,14 @@
             class="w-full py-2 bg-gray-800"
             notFoundText="No exercise found"
             appendTo="body"
-            (open)="toggleInputsEnabled(i)"
-            (close)="toggleInputsEnabled(i)"
+            [addTag]="addExerciseOption"
+            addTagText="Add Exercise"
             >
             </ng-select>
 
             <div class="flex flex-row">
-              <input type="number" min="1" [ngClass]="{'invisible': isInputsDisabled(i)}" formControlName="setsInput" placeholder="Sets" class="input input-bordered input-xs w-1/4 mb-2 mr-2" />
-              <input type="number" min="1" [ngClass]="{'invisible': isInputsDisabled(i)}" formControlName="repsInput" placeholder="Reps" class="input input-bordered input-xs w-1/4" />
+              <input type="number" min="1" formControlName="setsInput" placeholder="Sets" class="input input-bordered input-xs w-1/4 mb-2 mr-2" />
+              <input type="number" min="1" formControlName="repsInput" placeholder="Reps" class="input input-bordered input-xs w-1/4" />
             </div>
           </div>
         </div>

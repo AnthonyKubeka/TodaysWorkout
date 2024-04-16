@@ -7,6 +7,7 @@
         public abstract Task AddAsync(T item);
         public abstract Task UpdateAsync(string id, T item);
         public abstract Task DeleteAsync(string id); 
-        public abstract Task<IEnumerable<Dictionary<string, object>>> GetGenericData(); 
+        public abstract Task<IEnumerable<Dictionary<string, object>>> GetGenericData();
+        public abstract Task AddGenericDataAsync(string genericDataName); 
     }
 }

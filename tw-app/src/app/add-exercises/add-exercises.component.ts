@@ -12,9 +12,7 @@ import { NgSelectModule } from '@ng-select/ng-select';
   styleUrl: './add-exercises.component.css'
 })
 export class AddExercisesComponent {
-disableInputs() {
-throw new Error('Method not implemented.');
-}
+
 
   @Input() staticExercises: Exercise[] = [];
   showForm: boolean = false;
@@ -22,6 +20,7 @@ throw new Error('Method not implemented.');
   addExercisesForm!: FormGroup;
 
   constructor(private fb: FormBuilder, private storeService: StoreService){
+    this.addExerciseOption = this.addExerciseOption.bind(this);
   }
 
   ngOnInit() {
@@ -42,6 +41,10 @@ throw new Error('Method not implemented.');
     return this.addExercisesForm.controls["selectorsFormArray"] as FormArray;
   }
 
+  addExerciseOption(exercise: string) {
+    this.storeService.updateStaticExerciseData(exercise);
+    }
+
   toggleShowForm() {
     this.showForm = !this.showForm;
   }
@@ -50,30 +53,12 @@ throw new Error('Method not implemented.');
     this.selectorsFormArray.push(this.createSelectorFormControl());
     }
 
-    isInputsDisabled(selectorsFormArrayIndex: number): boolean {
-      const formGroup = this.selectorsFormArray.at(selectorsFormArrayIndex) as FormGroup;
-      const setsInput = formGroup.get('setsInput');
-      const repsInput = formGroup.get('repsInput');
-      return setsInput?.disabled && repsInput?.disabled;
-    }
-
-    toggleInputsEnabled(selectorsFormArrayIndex: number) {
-      const formGroup = this.selectorsFormArray.at(selectorsFormArrayIndex) as FormGroup;
-      const setsInput = formGroup.get('setsInput');
-      const repsInput = formGroup.get('repsInput');
-
-      if (this.isInputsDisabled(selectorsFormArrayIndex)) {
-        setsInput?.enable();
-        repsInput?.enable();
-      } else {
-        setsInput?.disable();
-        repsInput?.disable();
-      }
-    }
-
-
   save(){
     const formValues = this.addExercisesForm.value;
+
+    if (!formValues){
+      return;
+    }
 
     const exercisesToSave: Exercise[] = formValues.selectorsFormArray.map((selector: any) => {
       return {

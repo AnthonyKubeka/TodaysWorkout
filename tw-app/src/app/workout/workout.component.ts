@@ -6,11 +6,12 @@ import { Observable, of, map, take } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavigateService } from '../common/navigate.service';
 import { ViewEnum } from '../common/view.enum';
+import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
 
 @Component({
   selector: 'app-workout',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonStandardComponent],
   templateUrl: './workout.component.html',
   styleUrl: './workout.component.css'
 })
@@ -47,6 +48,7 @@ export class WorkoutComponent {
       targetRepsPerSet: exercise.targetRepsPerSet,
       targetSets: exercise.targetSets,
       pending: exercise.pending,
+      complete: exercise.complete,
       stepInformationFormArray: this.fb.array(this.initStepInformation(exercise.targetSets))
     })
   }
@@ -66,7 +68,10 @@ export class WorkoutComponent {
   }
 
   markStepAsComplete(index: number){
-    this.stepsFormArray.at(index+1).get('pending')?.setValue(true);
+    this.stepsFormArray.at(index).get('complete')?.setValue(true);
+    if (this.stepsFormArray.at(index+1)){
+      this.stepsFormArray.at(index+1).get('pending')?.setValue(true);
+    }
   }
 
   private save() {
@@ -90,7 +95,7 @@ export class WorkoutComponent {
 
 
   back(){
-    this.navigateService.navigateTo(ViewEnum.Home);
+    this.navigateService.navigateTo(ViewEnum.Build);
   }
 
   finish(){

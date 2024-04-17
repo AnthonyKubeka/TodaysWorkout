@@ -25,8 +25,8 @@
         </ng-container>
       </tbody>
     </table>
-    <button class="btn mt-1" (click)="exportToCsv()">Export to CSV</button>
-    <button class="btn ml-1" (click)="back()">Go Back</button>
+    <app-button-standard [text]="'Export To CSV'" (click)="exportToCsv()"/>
+    <app-button-standard [text]="'Go Back'" (click)="back()"/>
   </div>
 
 </div>

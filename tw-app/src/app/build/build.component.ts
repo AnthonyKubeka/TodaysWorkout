@@ -1,16 +1,14 @@
-import { StoreService } from './../common/store.service';
 import { AddExercisesComponent } from '../add-exercises/add-exercises.component';
 import { NavigateService } from '../common/navigate.service';
 import { ViewEnum } from './../common/view.enum';
 import { Component, ViewChild } from '@angular/core';
-import { Exercise } from '../common/exercise';
-import { Observable, startWith } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
 
 @Component({
   selector: 'app-build',
   standalone: true,
-  imports: [AddExercisesComponent, CommonModule],
+  imports: [AddExercisesComponent, CommonModule, ButtonStandardComponent],
   templateUrl: './build.component.html',
   styleUrl: './build.component.css'
 })
@@ -19,17 +17,10 @@ export class BuildComponent {
   ViewEnum = ViewEnum;
   @ViewChild(AddExercisesComponent)
   addExercisesComponent: AddExercisesComponent | undefined;
-  staticExercises$: Observable<Exercise[]>;
-  constructor(private navigateService: NavigateService, private storeService: StoreService) {
-    this.staticExercises$ = storeService.getStaticExercises();
-  }
+  constructor(private navigateService: NavigateService) {}
 
-  ngOnInit(): void {
-
-  }
-
-  navigate(view: ViewEnum) {
-    this.navigateService.navigateTo(view);
+  navigateToWorkout() {
+    this.navigateService.navigateTo(ViewEnum.Workout);
   }
 
   showForm(){

@@ -6,7 +6,7 @@
           <div class="flex flex-col">
             <span class="label-text">Select an exercise or type to search</span>
 
-            <ng-select [items]="staticExercises "
+            <ng-select [items]="staticExercises"
             bindLabel="name"
             formControlName="exerciseOption"
             class="w-full py-2 bg-gray-800"
@@ -24,8 +24,8 @@
           </div>
         </div>
       </div>
-      <button class="btn btn-lg text-lg m-2" (click)="addExerciseSelector()">Add Another Exercise</button>
-      <button class="btn btn-lg m-2" (click)="save()">Done</button>
+      <app-button-standard [text]="'Add An Exercise'" (click)="addExerciseSelector()"/>
+      <app-button-standard [text]="'Done'" (click)="save()"/>
     </div>
   </div>
 </div>

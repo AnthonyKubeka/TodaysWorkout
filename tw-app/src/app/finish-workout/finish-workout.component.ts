@@ -1,22 +1,22 @@
 import { NavigateService } from './../common/navigate.service';
 import { Exercise } from './../common/exercise';
-import { Observable, map, of, take } from 'rxjs';
+import { Observable, Subscription, map, of, take } from 'rxjs';
 import { StoreService } from './../common/store.service';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewEnum } from '../common/view.enum';
+import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
 
 @Component({
   selector: 'app-finish-workout',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, ButtonStandardComponent],
   templateUrl: './finish-workout.component.html',
   styleUrl: './finish-workout.component.css'
 })
 export class FinishWorkoutComponent {
 
   exercises$: Observable<Exercise[]> = of([]);
-
   constructor(private storeService: StoreService, private navigateService: NavigateService){}
 
   ngOnInit() {

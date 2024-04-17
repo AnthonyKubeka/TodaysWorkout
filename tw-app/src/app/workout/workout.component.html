@@ -27,18 +27,14 @@
                      placeholder="Intensity: " class="input input-bordered input-xs w-32" />
             </div>
           </ng-container>
-          <button (click)="markStepAsComplete(i)" class="hover:text-green-500">&#10003;</button>
+          <button (click)="markStepAsComplete(i)" [ngClass]="{'text-green-500': stepFormGroup.get('complete')?.value}" class="hover:text-green-500">&#10003;</button>
         </div>
 
       </li>
     </ul>
   </div>
   <div class="flex flex-row">
-    <button class="btn btn-lg text-lg mx-4">
-      <span class="uppercase" (click)="back()">Go Back</span>
-    </button>
-    <button class="btn btn-lg text-lg mx-4">
-      <span class="uppercase" (click)="finish()">Finish workout</span>
-    </button>
+    <app-button-standard (click)="back()" [text]="'Go Back'"/>
+    <app-button-standard (click)="finish()" [text]="'Finish Workout'"/>
   </div>
 </div>

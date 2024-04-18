@@ -1,13 +1,13 @@
-<div class="flex flex-col items-center justify-center h-screen" [formGroup]="workoutForm">
-  <h1 class="text-4xl font-bold uppercase mb-8 text-center">Let's Work</h1>
+<div class="flex flex-col justify-center items-center h-screen" [formGroup]="workoutForm">
+  <h1 class="text-4xl font-bold uppercase mb-4 text-center">Let's Work</h1>
 
-  <div formArrayName="stepsFormArray" class="flex flex-col items-center">
-    <ul class="steps steps-vertical">
+  <div formArrayName="stepsFormArray">
+    <ul class="steps steps-vertical flex flex-col items-center flex-wrap">
       <li class="step" [ngClass]="{'step-primary': stepFormGroup.get('pending')?.value}"
           *ngFor="let stepFormGroup of stepsFormArray.controls; let i = index"
           [formGroupName]="i">
 
-        <div class="flex-col p-4">
+        <div class="flex-col p-2">
           <div class="flex-row">
             {{ stepFormGroup.get('exercise')?.value}}:
             <label class="label-text">{{stepFormGroup.get('targetRepsPerSet')?.value}}</label>
@@ -22,9 +22,9 @@
 
               <label class="label-text">Set {{j+1}}: </label>
               <input type="number" min="1" formControlName="repsCompleted"
-                     placeholder="Reps Completed: " class="input input-bordered input-xs w-32" />
-              <input type="number" min="1" formControlName="intensity"
-                     placeholder="Intensity: " class="input input-bordered input-xs w-32" />
+                     placeholder="Reps Completed:" class="input input-bordered input-xs w-32" />
+              <input type="number" min="1" max="10" formControlName="intensity"
+                     placeholder="Intensity (1-10):" class="input input-bordered input-xs w-32" />
             </div>
           </ng-container>
           <button (click)="markStepAsComplete(i)" [ngClass]="{'text-green-500': stepFormGroup.get('complete')?.value}" class="hover:text-green-500">&#10003;</button>
@@ -33,7 +33,7 @@
       </li>
     </ul>
   </div>
-  <div class="flex flex-row">
+  <div class="flex flex-row justify-center">
     <app-button-standard (click)="back()" [text]="'Go Back'"/>
     <app-button-standard (click)="finish()" [text]="'Finish Workout'"/>
   </div>

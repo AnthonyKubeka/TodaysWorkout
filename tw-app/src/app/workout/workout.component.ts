@@ -2,16 +2,19 @@ import { Component, Input } from '@angular/core';
 import { Exercise } from '../common/exercise';
 import { StoreService } from '../common/store.service';
 import { CommonModule } from '@angular/common';
-import { Observable, of, map, take } from 'rxjs';
+import { Observable, of, take } from 'rxjs';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NavigateService } from '../common/navigate.service';
 import { ViewEnum } from '../common/view.enum';
 import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
+import { NgIconComponent, provideIcons } from '@ng-icons/core';
+import { ionInformationCircleOutline } from '@ng-icons/ionicons';
 
 @Component({
   selector: 'app-workout',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonStandardComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonStandardComponent, NgIconComponent],
+  providers: [provideIcons({ionInformationCircleOutline})],
   templateUrl: './workout.component.html',
   styleUrl: './workout.component.css'
 })
@@ -22,7 +25,7 @@ export class WorkoutComponent {
   constructor(private storeService: StoreService, private fb: FormBuilder, private navigateService: NavigateService){}
 
   ngOnInit(): void {
-    this.exercises$ = this.storeService.getExercises().pipe(take(1));
+    this.exercises$ = this.storeService.getExercisesFake().pipe(take(1));
 
     this.workoutForm = this.fb.group({
       stepsFormArray: this.fb.array([])

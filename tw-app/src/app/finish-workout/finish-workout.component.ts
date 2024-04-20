@@ -27,18 +27,27 @@ export class FinishWorkoutComponent {
     this.navigateService.navigateTo(ViewEnum.Workout);
   }
 
+  getExerciseString(exercise: Exercise): string {
+    let heading = '';
+    let rows = '';
+    heading = `Exercise: ${exercise.name}`;
+    exercise.completedSets.map((set, index) =>{
+      rows = rows + '\n' + `Set${index+1}Reps: ${set.reps}, Intensity: ${set.intensity}`;
+    }
+  );
+    return heading + rows + '\n';
+  }
+
   exportToCsv() {
     this.exercises$.pipe(
       take(1),
       map(exercises => {
-        const headers = 'Exercise,Set,Reps Completed,Intensity\n';
-        const rows = exercises.map(exercise =>
-          exercise.completedSets.map((set, index) =>
-            `${index === 0 ? exercise.name : ''},${index + 1},${set.reps},${set.intensity}`
-          ).join('\n')
-        ).join('\n');
-
-        return headers + rows;
+        let exercisesArr: string[] = [];
+        exercises.map(exercise => {
+          let exerciseString = this.getExerciseString(exercise);
+          exercisesArr.push(exerciseString);
+        })
+        return exercisesArr.join('\n');
       })
     ).subscribe(csvData => {
       const blob = new Blob([csvData], { type: 'text/csv' });

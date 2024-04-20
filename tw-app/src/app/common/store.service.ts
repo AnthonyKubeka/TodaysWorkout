@@ -91,7 +91,7 @@ export class StoreService {
       {
         id: 1,
         name: 'Pushups',
-        targetSets: 3,
+        targetSets: 2,
         targetRepsPerSet: 10,
         completedSets: [{reps: 1, intensity: 9}, {reps: 1, intensity: 9} ],
         pending: false,
@@ -109,7 +109,7 @@ export class StoreService {
       {
         id: 3,
         name: 'Squats',
-        targetSets: 4,
+        targetSets: 1,
         targetRepsPerSet: 12,
         completedSets: [{reps: 1, intensity: 9}],
         pending: false,

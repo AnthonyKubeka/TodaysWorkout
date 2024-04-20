@@ -38,8 +38,36 @@ export class FinishWorkoutComponent {
     return heading + rows + '\n';
   }
 
+  copyToClipboard(){
+    this.mapExercisesToSummary().subscribe(csvData => {
+      if (navigator.clipboard) {
+        navigator.clipboard.writeText(csvData)
+          .then(() => {
+            console.log('CSV data copied to clipboard successfully!');
+          })
+          .catch(err => {
+            console.error('Failed to copy CSV data to clipboard: ', err);
+          });
+      } else {
+        console.log('Clipboard API not available.');
+      }
+    });
+  }
+
   exportToCsv() {
-    this.exercises$.pipe(
+    this.mapExercisesToSummary().subscribe(csvData => {
+      const blob = new Blob([csvData], { type: 'text/csv' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'workout-summary.csv';
+      a.click();
+      window.URL.revokeObjectURL(url);
+    });
+  }
+
+  private mapExercisesToSummary(): Observable<string>{
+    return this.exercises$.pipe(
       take(1),
       map(exercises => {
         let exercisesArr: string[] = [];
@@ -49,15 +77,7 @@ export class FinishWorkoutComponent {
         })
         return exercisesArr.join('\n');
       })
-    ).subscribe(csvData => {
-      const blob = new Blob([csvData], { type: 'text/csv' });
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'workout-summary.csv';
-      a.click();
-      window.URL.revokeObjectURL(url);
-    });
+    );
   }
 
 }

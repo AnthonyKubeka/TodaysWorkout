@@ -25,6 +25,7 @@
         </ng-container>
       </tbody>
     </table>
+    <app-button-standard [text]="'Copy to clipboard'" (click)="copyToClipboard()"/>
     <app-button-standard [text]="'Export To CSV'" (click)="exportToCsv()"/>
     <app-button-standard [text]="'Go Back'" (click)="back()"/>
   </div>

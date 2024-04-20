@@ -25,7 +25,7 @@ export class WorkoutComponent {
 
   ngOnInit() {
 
-    this.exercisesSubscription = this.storeService.getExercisesFake().subscribe(exercises => {
+    this.exercisesSubscription = this.storeService.getExercises().subscribe(exercises => {
       this.initFormValues(exercises);
    });
 

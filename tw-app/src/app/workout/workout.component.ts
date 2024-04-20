@@ -26,7 +26,9 @@ export class WorkoutComponent {
   ngOnInit() {
 
     this.exercisesSubscription = this.storeService.getExercises().subscribe(exercises => {
-      this.initFormValues(exercises);
+      if (exercises){
+        this.initFormValues(exercises);
+      }
    });
 
   }
@@ -36,7 +38,7 @@ export class WorkoutComponent {
   }
 
   initFormValues(exercises: Exercise[]){
-    if (!exercises[0].complete){
+    if (!exercises[0]?.complete){
       exercises[0].pending = true;
     }
 
@@ -60,10 +62,10 @@ export class WorkoutComponent {
 
   initStepInformation(exercise: Exercise): FormGroup[] {
     return Array.from({ length: exercise.targetSets }).map((element, index) => {
-      const set = exercise.completedSets[index];
+      const set = exercise.completedSets && exercise.completedSets[index];  // Check both for the array and the specific index
       return this.fb.group({
         repsCompleted: [set ? set.reps : null],
-        intensity: [set ? set.intensity : null]
+        intensity: [set ? set.intensity : null]  // Use the value if set exists, otherwise null
       });
     });
   }

@@ -19,6 +19,13 @@ export class BuildComponent {
   addExercisesComponent: AddExercisesComponent | undefined;
   constructor(private navigateService: NavigateService) {}
 
+  isAtLeastOneExerciseAdded(): boolean {
+    if (!this.addExercisesComponent){
+      return false;
+    }
+
+    return this.addExercisesComponent.exercises.length > 0;
+  }
   navigateToWorkout() {
     this.navigateService.navigateTo(ViewEnum.Workout);
   }

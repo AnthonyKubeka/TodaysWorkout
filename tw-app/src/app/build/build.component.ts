@@ -4,6 +4,8 @@ import { ViewEnum } from './../common/view.enum';
 import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
+import { StoreService } from '../common/store.service';
+import { take } from 'rxjs';
 
 @Component({
   selector: 'app-build',
@@ -17,16 +19,17 @@ export class BuildComponent {
   ViewEnum = ViewEnum;
   @ViewChild(AddExercisesComponent)
   addExercisesComponent: AddExercisesComponent | undefined;
-  constructor(private navigateService: NavigateService) {}
+  constructor(private navigateService: NavigateService, private storeService: StoreService) {}
 
-  isAtLeastOneExerciseAdded(): boolean {
-    if (!this.addExercisesComponent){
-      return false;
+  get isAtLeastOneExerciseAdded(): boolean {
+    return this.storeService.isAtLeastOneExerciseAdded;
+  }
+
+  navigateToWorkout(disabled: boolean) {
+    if (disabled){
+      return;
     }
 
-    return this.addExercisesComponent.exercises.length > 0;
-  }
-  navigateToWorkout() {
     this.navigateService.navigateTo(ViewEnum.Workout);
   }
 

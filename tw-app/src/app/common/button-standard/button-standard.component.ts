@@ -1,9 +1,10 @@
+import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-button-standard',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './button-standard.component.html',
   styleUrl: './button-standard.component.css'
 })

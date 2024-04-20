@@ -10,8 +10,9 @@ export class StoreService {
 
   private staticExercisesSubject = new BehaviorSubject<Exercise[]>([]); //private to Store and has 'memory'
   private exercisesSubject = new BehaviorSubject<Exercise[]>([]);
-  staticExercises$ = this.staticExercisesSubject.asObservable();
-  exercises$ = this.exercisesSubject.asObservable();
+  private staticExercises$ = this.staticExercisesSubject.asObservable();
+  private exercises$ = this.exercisesSubject.asObservable();
+  isAtLeastOneExerciseAdded = false;
   readonly defaultNumberOfSetsOrReps = 1;
 
   constructor(private httpClient: HttpClient) {
@@ -76,6 +77,10 @@ export class StoreService {
       }
     });
     this.exercisesSubject.next(exercises);
+    if(exercises.length > 0){
+      this.isAtLeastOneExerciseAdded = true;
+    }
+
   }
 
   getStaticExercises(): Observable<Exercise[]> {

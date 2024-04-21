@@ -52,7 +52,18 @@ export class AddExercisesComponent {
     return this.fb.group({
       exerciseOption: [exercise],
       setsInput: [exercise.targetSets, Validators.min(1)],
-      repsInput: [exercise.targetRepsPerSet, Validators.min(1)]
+      repsInput: [exercise.targetRepsPerSet, Validators.min(1)],
+      stepInformationFormArray: this.fb.array(this.initStepInformation(exercise)) // not explicitly used to show info to user on this screen, more to keep state
+    });
+  }
+
+  initStepInformation(exercise: Exercise): FormGroup[] {
+    return Array.from({length: exercise.targetSets}).map((element, index) => {
+      const set = exercise.completedSets && exercise.completedSets[index];
+      return this.fb.group({
+        repsCompleted: [set ? set.reps : null],
+        intensity: [set ? set.intensity : null]
+      })
     });
   }
 
@@ -60,7 +71,8 @@ export class AddExercisesComponent {
     return this.fb.group({
       exerciseOption: [this.staticExercises[0]],
       setsInput: [''],
-      repsInput: ['']
+      repsInput: [''],
+      stepInformationFormArray: this.fb.array(this.initStepInformation(this.staticExercises[0]))
     });
   }
 
@@ -76,7 +88,7 @@ export class AddExercisesComponent {
       name: exercise,
       targetSets: 1,
       targetRepsPerSet: 1,
-      completedSets: []
+      completedSets: [{reps: null, intensity: null}]
     };
 
     this.staticExercises = [...this.staticExercises, newExercise];
@@ -101,7 +113,11 @@ export class AddExercisesComponent {
         id: selector.exerciseOption.id ? selector.exerciseOption.id : 0,
         name: selector.exerciseOption.name,
         targetSets: selector.setsInput,
-        targetRepsPerSet: selector.repsInput
+        targetRepsPerSet: selector.repsInput,
+        completedSets: selector.stepInformationFormArray.map((set: any) => ({
+          reps: set.repsCompleted,
+          intensity: set.intensity
+        })),
       };
     });
 

@@ -62,10 +62,10 @@ export class WorkoutComponent {
 
   initStepInformation(exercise: Exercise): FormGroup[] {
     return Array.from({ length: exercise.targetSets }).map((element, index) => {
-      const set = exercise.completedSets && exercise.completedSets[index];  // Check both for the array and the specific index
+      const set = exercise.completedSets && exercise.completedSets[index];
       return this.fb.group({
         repsCompleted: [set ? set.reps : null],
-        intensity: [set ? set.intensity : null]  // Use the value if set exists, otherwise null
+        intensity: [set ? set.intensity : null]
       });
     });
   }

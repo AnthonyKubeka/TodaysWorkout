@@ -1,5 +1,5 @@
 <div [formGroup]="addExercisesForm" class="modal" [ngClass]="{'modal-open': showForm}">
-  <div class="modal-box bg-gray-800">
+  <div class="modal-box">
     <div class="flex flex-col items-center">
       <div formArrayName="selectorsFormArray">
         <div *ngFor="let selectorControl of selectorsFormArray.controls; let i = index" [formGroupName]="i">
@@ -9,7 +9,7 @@
             <ng-select [items]="staticExercises"
             bindLabel="name"
             formControlName="exerciseOption"
-            class="w-full py-2 bg-gray-800"
+            class="w-full py-2 mb-1 bg-neutral-content rounded-lg"
             notFoundText="No exercise found"
             appendTo="body"
             [addTag]="addExerciseOption"

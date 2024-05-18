@@ -20,6 +20,7 @@
             <div class="flex flex-row">
               <input type="number" min="1" formControlName="setsInput" placeholder="Sets" class="input input-bordered input-xs w-1/4 mb-2 mr-2" />
               <input type="number" min="1" formControlName="repsInput" placeholder="Reps" class="input input-bordered input-xs w-1/4" />
+              <app-button-delete (click)="deleteExercise(i)"></app-button-delete>
             </div>
           </div>
         </div>

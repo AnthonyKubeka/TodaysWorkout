@@ -6,10 +6,11 @@ import { StoreService } from '../common/store.service';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { Observable, Subscription, take } from 'rxjs';
 import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
+import { ButtonDeleteComponent } from '../common/button-delete/button-delete.component';
 @Component({
   selector: 'app-add-exercises',
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, CommonModule, NgSelectModule, ButtonStandardComponent],
+  imports: [FormsModule, ReactiveFormsModule, CommonModule, NgSelectModule, ButtonStandardComponent, ButtonDeleteComponent],
   templateUrl: './add-exercises.component.html',
   styleUrl: './add-exercises.component.css'
 })
@@ -95,6 +96,10 @@ export class AddExercisesComponent {
     this.storeService.updateExercises(this.staticExercises);
     });
 
+  }
+
+  deleteExercise(index: number){
+    this.selectorsFormArray.removeAt(index);
   }
 
   toggleShowForm() {

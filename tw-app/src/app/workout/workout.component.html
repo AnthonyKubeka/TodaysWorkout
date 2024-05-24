@@ -7,12 +7,14 @@
           *ngFor="let stepFormGroup of stepsFormArray.controls; let i = index"
           [formGroupName]="i">
 
-        <div class="flex-col p-2">
+        <div class="flex-col py-2">
           <div class="flex-row">
             {{ stepFormGroup.get('exercise')?.value}}:
-            <label class="label-text">{{stepFormGroup.get('targetRepsPerSet')?.value}}</label>
-            <label class="label-text ml-1 mr-1">X</label>
-            <label class="label-text">{{stepFormGroup.get('targetSets')?.value}}</label>
+            <label>
+              {{ stepFormGroup.get('targetSets')?.value }} Set{{ stepFormGroup.get('targetSets')?.value > 1 ? 's' : '' }}
+            </label>
+            <label class="mx-1">X</label>
+            <label>{{stepFormGroup.get('targetRepsPerSet')?.value}} Rep{{ stepFormGroup.get('targetRepsPerSet')?.value > 1 ? 's': ''}}</label>
           </div>
 
           <ng-container formArrayName="stepInformationFormArray">
@@ -25,6 +27,8 @@
                      placeholder="Reps Completed:" class="input input-bordered input-xs w-32" />
               <input type="number" min="1" max="10" formControlName="intensity"
                      placeholder="Intensity (1-10):" class="input input-bordered input-xs w-32" />
+              <input type="number" formControlName="weight"
+                     placeholder="Weight (kg):" class="input input-bordered input-xs w-32" />
             </div>
           </ng-container>
           <button (click)="markStepAsComplete(i)" [ngClass]="{'text-green-500': stepFormGroup.get('complete')?.value}" class="hover:text-green-500">&#10003;</button>

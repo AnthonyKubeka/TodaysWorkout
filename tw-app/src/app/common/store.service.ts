@@ -98,7 +98,7 @@ export class StoreService {
         name: 'Pushups',
         targetSets: 2,
         targetRepsPerSet: 10,
-        completedSets: [{reps: 1, intensity: 9}, {reps: 1, intensity: 9} ],
+        completedSets: [{reps: 1, intensity: 9, weight: 1}, {reps: 1, intensity: 9, weight: 2} ],
         pending: false,
         complete: false
       },
@@ -107,7 +107,7 @@ export class StoreService {
         name: 'Pull Ups',
         targetSets: 3,
         targetRepsPerSet: 8,
-        completedSets: [{reps: 1, intensity: 9}, {reps: 1, intensity: 9}, {reps: 1, intensity: 9}],
+        completedSets: [{reps: 1, intensity: 9, weight: 10}, {reps: 1, intensity: 9, weight: 10}, {reps: 1, intensity: 9, weight: 8}],
         pending: false,
         complete: false
       },
@@ -116,7 +116,7 @@ export class StoreService {
         name: 'Squats',
         targetSets: 1,
         targetRepsPerSet: 12,
-        completedSets: [{reps: 1, intensity: 9}],
+        completedSets: [{reps: 1, intensity: 9, weight: null}],
         pending: false,
         complete: false
       }

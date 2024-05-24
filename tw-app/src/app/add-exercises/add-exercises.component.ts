@@ -89,7 +89,7 @@ export class AddExercisesComponent {
       name: exercise,
       targetSets: 1,
       targetRepsPerSet: 1,
-      completedSets: [{reps: null, intensity: null}]
+      completedSets: [{reps: null, intensity: null, weight: null}]
     };
 
     this.staticExercises = [...this.staticExercises, newExercise];

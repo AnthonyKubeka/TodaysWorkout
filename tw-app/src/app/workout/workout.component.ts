@@ -65,7 +65,8 @@ export class WorkoutComponent {
       const set = exercise.completedSets && exercise.completedSets[index];
       return this.fb.group({
         repsCompleted: [set ? set.reps : null],
-        intensity: [set ? set.intensity : null]
+        intensity: [set ? set.intensity : null],
+        weight: [set ? set.weight: null]
       });
     });
   }
@@ -91,7 +92,8 @@ export class WorkoutComponent {
         targetSets: step.targetSets,
         completedSets: step.stepInformationFormArray.map((set: any) => ({
           reps: set.repsCompleted,
-          intensity: set.intensity
+          intensity: set.intensity,
+          weight: set.weight
         })),
         pending: step.pending,
         complete: step.complete

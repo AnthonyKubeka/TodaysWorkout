@@ -1,9 +1,11 @@
+import { ButtonDeleteComponent } from './../common/button-delete/button-delete.component';
+import { ButtonSleekComponent } from './../common/button-sleek/button-sleek.component';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ionInformationCircleOutline } from '@ng-icons/ionicons';
-import { Subscription } from 'rxjs';
+import { Subscription, map } from 'rxjs';
 import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
 import { Exercise } from '../common/exercise';
 import { NavigateService } from '../common/navigate.service';
@@ -13,12 +15,13 @@ import { ViewEnum } from '../common/view.enum';
 @Component({
   selector: 'app-workout',
   standalone: true,
-  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonStandardComponent, NgIconComponent],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule, ButtonStandardComponent, ButtonSleekComponent, NgIconComponent, ButtonDeleteComponent],
   providers: [provideIcons({ionInformationCircleOutline})],
   templateUrl: './workout.component.html',
   styleUrl: './workout.component.css'
 })
 export class WorkoutComponent {
+
   workoutForm!: FormGroup;
   exercisesSubscription: Subscription;
   constructor(private storeService: StoreService, private fb: FormBuilder, private navigateService: NavigateService){}
@@ -103,6 +106,31 @@ export class WorkoutComponent {
     this.storeService.updateExercises(exercisesToSave);
   }
 
+  createStepInformationControl() {
+    return this.fb.group ({
+      repsCompleted: null,
+      intensity: null,
+      weight: null
+    });
+  }
+
+  deleteSet(stepFormGroupIndex: number, setIndex: number){
+    if (setIndex <= 0){
+      return;
+    }
+
+    const stepFormGroup = this.stepsFormArray.at(stepFormGroupIndex) as FormGroup;
+    const stepInformationFormArray = stepFormGroup.get('stepInformationFormArray') as FormArray;
+    stepFormGroup.get('targetSets')?.setValue(stepInformationFormArray.length - 1);
+    stepInformationFormArray.removeAt(stepFormGroupIndex);
+  }
+
+  addSet(stepFormGroupIndex: number) {
+    const stepFormGroup = this.stepsFormArray.at(stepFormGroupIndex) as FormGroup;
+    const stepInformationFormArray = stepFormGroup.get('stepInformationFormArray') as FormArray;
+    stepInformationFormArray.push(this.createStepInformationControl());
+    stepFormGroup.get('targetSets')?.setValue(stepInformationFormArray.length);
+  }
 
   back(){
     this.navigateService.navigateTo(ViewEnum.Build);

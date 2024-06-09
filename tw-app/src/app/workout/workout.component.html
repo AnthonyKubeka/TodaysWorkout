@@ -29,8 +29,10 @@
                      placeholder="Intensity (1-10):" class="input input-bordered input-xs w-32" />
               <input type="number" formControlName="weight"
                      placeholder="Weight (kg):" class="input input-bordered input-xs w-32" />
+              <app-button-delete [ngClass]="{'invisible': j == 0}" class="ml-2" (click)="deleteSet(i, j)"></app-button-delete>
             </div>
           </ng-container>
+          <app-button-sleek (click)="addSet(i)" [text]="'Add Set'"></app-button-sleek>
           <button (click)="markStepAsComplete(i)" [ngClass]="{'text-green-500': stepFormGroup.get('complete')?.value}" class="hover:text-green-500">&#10003;</button>
         </div>
 

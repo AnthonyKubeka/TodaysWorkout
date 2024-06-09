@@ -3,26 +3,20 @@
     <div class="flex flex-col items-center">
       <div formArrayName="selectorsFormArray">
         <div *ngFor="let selectorControl of selectorsFormArray.controls; let i = index" [formGroupName]="i">
-          <div class="flex flex-col">
-            <span class="label-text">Select an exercise or type to search</span>
-            <div class="flex flex-row items-center">
-            <ng-select [items]="staticExercises"
-            bindLabel="name"
-            formControlName="exerciseOption"
-            class="w-full py-2 mb-1 bg-neutral-content rounded-lg"
-            notFoundText="No exercise found"
-            appendTo="body"
-            [addTag]="addExerciseOption"
-            addTagText="Add Exercise "
-            >
-            </ng-select>
-            <app-button-delete class="ml-2" (click)="deleteExercise(i)"></app-button-delete>
-          </div>
-
-            <div class="flex flex-row">
-              <label class="mr-2">Sets:</label><input type="number" min="1" formControlName="setsInput" class="input input-bordered input-xs w-1/4 mb-2 mr-2" />
-              <label class="mr-2">Reps:</label><input type="number" min="1" formControlName="repsInput" class="input input-bordered input-xs w-1/4 mb-2 mr-2" />
-              <label class="text-xs mr-2 justify-center">Weight (in kg, separate weights per set by comma):</label><input type="text" formControlName="weightsPerSetInput" class="input input-bordered input-xs w-1/4 mb-2 mr-2" />
+            <div class="flex flex-col">
+              <span class="label-text">Select an exercise or type to search</span>
+              <div class="flex flex-row items-center">
+              <ng-select [items]="staticExercises"
+              bindLabel="name"
+              formControlName="exerciseOption"
+              class="w-full py-2 mb-1 bg-neutral-content rounded-lg"
+              notFoundText="No exercise found"
+              appendTo="body"
+              [addTag]="addExerciseOption"
+              addTagText="Add Exercise "
+              >
+              </ng-select>
+              <app-button-delete class="ml-2" (click)="deleteExercise(i)"></app-button-delete>
             </div>
           </div>
         </div>

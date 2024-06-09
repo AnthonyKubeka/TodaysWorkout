@@ -121,7 +121,8 @@ export class AddExercisesComponent {
         targetRepsPerSet: selector.repsInput,
         completedSets: selector.stepInformationFormArray.map((set: any) => ({
           reps: set.repsCompleted,
-          intensity: set.intensity
+          intensity: set.intensity,
+          weight: set.weight
         })),
       };
     });

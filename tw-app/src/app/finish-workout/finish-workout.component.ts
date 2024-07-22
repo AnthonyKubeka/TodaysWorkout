@@ -20,7 +20,7 @@ export class FinishWorkoutComponent {
   constructor(private storeService: StoreService, private navigateService: NavigateService){}
 
   ngOnInit() {
-    this.exercises$ = this.storeService.getExercises();
+    this.exercises$ = this.storeService.getExercisesObservable();
   }
 
   back(){

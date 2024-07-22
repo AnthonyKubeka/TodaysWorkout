@@ -1,6 +1,6 @@
-import { NavigateService } from './../app/common/navigate.service';
+import { NavigateService } from '../common/navigate.service';
 import { Component } from '@angular/core';
-import { ViewEnum } from '../app/common/view.enum';
+import { ViewEnum } from '../common/view.enum';
 
 @Component({
   selector: 'app-home',

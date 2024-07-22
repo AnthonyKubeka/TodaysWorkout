@@ -2,15 +2,15 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
 import { Exercise } from './exercise';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { generateGuid } from './utils';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
 
-  private staticExercisesSubject = new BehaviorSubject<Exercise[]>([]); //private to Store and has 'memory'
+  private staticExercisesNamesSubject = new BehaviorSubject<string[]>([]); //private to Store and has 'memory'
   private exercisesSubject = new BehaviorSubject<Exercise[]>([]);
-  private staticExercises$ = this.staticExercisesSubject.asObservable();
   private exercises$ = this.exercisesSubject.asObservable();
   isAtLeastOneExerciseAdded = false;
   readonly defaultNumberOfSetsOrReps = 1;
@@ -19,11 +19,11 @@ export class StoreService {
   }
 
   init() {
-    const staticExercisesReq$ = this.getStaticExerciseData();
+    const staticExercisesReq$ = this.getStaticExerciseNames();
 
     staticExercisesReq$.subscribe({
-      next: (exercises: Exercise[]) => {
-        this.staticExercisesSubject.next(exercises);
+      next: (exerciseNames: string[]) => {
+        this.staticExercisesNamesSubject.next(exerciseNames);
       },
       error: (error) => {
         console.error('Could not fetch static data due to error:', error);
@@ -32,24 +32,18 @@ export class StoreService {
     );
   }
 
-  private getStaticExerciseData(): Observable<Exercise[]> {
+   getStaticExerciseNames(): Observable<string[]> {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
 
-    return this.httpClient.get<Exercise[]>(
+    return this.httpClient.get<string[]>(
       'https://todaysworkoutapi.azurewebsites.net/Exercises/exercise-data',
       { headers: headers }
     ).pipe(
-      map((res: any[]) => res.map(item => ({
-        ...item,
-        targetSets: this.defaultNumberOfSetsOrReps,
-        targetRepsPerSet: this.defaultNumberOfSetsOrReps,
-        completedSets: [],
-        pending: false,
-        complete: false
-      })))
+      map((res: any[]) => res.map(item => item.name))
     );
   }
+
 
   updateStaticExerciseData(exerciseName: string): Observable<any> {
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
@@ -66,35 +60,66 @@ export class StoreService {
     );
   }
 
-  updateExercises(exercises: Exercise[]) {
-    exercises.forEach(exercise => {
-      if (!exercise.targetSets){
-        exercise.targetSets = this.defaultNumberOfSetsOrReps;
-      }
+  createBlankExercise(name: string) {
+    const newExercise: Exercise = {
+      uuid: generateGuid(),
+      name,
+      targetSets: this.defaultNumberOfSetsOrReps,
+      targetRepsPerSet: this.defaultNumberOfSetsOrReps,
+      completedSets: [],
+      pending: false,
+      complete: false
+    };
 
-      if (!exercise.targetRepsPerSet){
-        exercise.targetRepsPerSet = this.defaultNumberOfSetsOrReps;
-      }
-    });
+    let exercises = this.getExercises();
+    exercises.push(newExercise);
     this.exercisesSubject.next(exercises);
-    if(exercises.length > 0){
-      this.isAtLeastOneExerciseAdded = true;
+  }
+
+  createExercise(uuid: string, name: string): Exercise {
+    return {
+      uuid: uuid,
+      name,
+      targetSets: this.defaultNumberOfSetsOrReps,
+      targetRepsPerSet: this.defaultNumberOfSetsOrReps,
+      completedSets: [],
+      pending: false,
+      complete: false
+    };
+  }
+
+  updateExercises(exercises: Exercise[]){
+    this.exercisesSubject.next(exercises);
+  }
+
+  getExerciseByUuid(uuid: string): Exercise | undefined {
+    return this.getExercises().find(exercise => exercise.uuid === uuid);
+  }
+
+  updateExercise(uuid: string, updatedExercise: Partial<Exercise>) {
+    const exercise = this.getExerciseByUuid(uuid);
+
+    if (exercise){
+      Object.assign(exercise, updatedExercise);
     }
-
   }
 
-  getStaticExercises(): Observable<Exercise[]> {
-    return this.staticExercises$;
+  getExerciseNames(): string[] {
+    return this.staticExercisesNamesSubject.getValue();
   }
 
-  getExercises(): Observable<Exercise[]> {
+  getExercisesObservable(): Observable<Exercise[]> {
     return this.exercises$;
+  }
+
+  getExercises(): Exercise[] {
+    return this.exercisesSubject.getValue();
   }
 
   getExercisesFake(): Observable<Exercise[]>{
     const exercises: Exercise[] = [
       {
-        id: 1,
+        uuid: generateGuid(),
         name: 'Pushups',
         targetSets: 2,
         targetRepsPerSet: 10,
@@ -103,7 +128,7 @@ export class StoreService {
         complete: false
       },
       {
-        id: 2,
+        uuid: generateGuid(),
         name: 'Pull Ups',
         targetSets: 3,
         targetRepsPerSet: 8,
@@ -112,7 +137,7 @@ export class StoreService {
         complete: false
       },
       {
-        id: 3,
+        uuid: generateGuid(),
         name: 'Squats',
         targetSets: 1,
         targetRepsPerSet: 12,

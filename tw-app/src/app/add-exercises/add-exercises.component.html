@@ -6,8 +6,7 @@
             <div class="flex flex-col">
               <span class="label-text">Select an exercise or type to search</span>
               <div class="flex flex-row items-center">
-              <ng-select [items]="staticExercises"
-              bindLabel="name"
+              <ng-select [items]="exerciseNames"
               formControlName="exerciseOption"
               class="w-full py-2 mb-1 bg-neutral-content rounded-lg"
               notFoundText="No exercise found"

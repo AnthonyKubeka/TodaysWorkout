@@ -24,13 +24,15 @@ export class WorkoutComponent {
 
   workoutForm!: FormGroup;
   exercisesSubscription: Subscription;
+  exercises: Exercise[];
   constructor(private storeService: StoreService, private fb: FormBuilder, private navigateService: NavigateService){}
 
   ngOnInit() {
 
-    this.exercisesSubscription = this.storeService.getExercises().subscribe(exercises => {
+    this.exercisesSubscription = this.storeService.getExercisesObservable().subscribe(exercises => {
       if (exercises){
         this.initFormValues(exercises);
+        this.exercises = exercises;
       }
    });
 

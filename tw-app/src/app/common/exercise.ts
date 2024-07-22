@@ -1,5 +1,5 @@
 export interface Exercise {
-  id: number;
+  uuid: string;
   name: string;
   targetSets: number;
   targetRepsPerSet: number;

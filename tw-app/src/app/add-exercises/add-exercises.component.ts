@@ -4,7 +4,7 @@ import { Component, Input, SimpleChanges } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { StoreService } from '../common/store.service';
 import { NgSelectModule } from '@ng-select/ng-select';
-import { Observable, Subscription, take } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, Subscription, take, takeUntil } from 'rxjs';
 import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
 import { ButtonDeleteComponent } from '../common/button-delete/button-delete.component';
 import { generateGuid } from '../common/utils';
@@ -18,43 +18,42 @@ import { generateGuid } from '../common/utils';
 })
 export class AddExercisesComponent {
 
-  exerciseNames: string[] = [];
   showForm: boolean = false;
-  staticExerciseSubscription: Subscription;
-  exercisesSubscription: Subscription;
-  addExercisesForm!: FormGroup;
+  addExercisesForm: FormGroup;
+  exercises$: Observable<Exercise[]>;
+  staticExerciseNames$: Observable<string[]>;
 
-  constructor(private fb: FormBuilder, private storeService: StoreService){}
+  private unsubscribe$ = new Subject<void>();
 
-  ngOnInit() {
-    this.addExerciseOption = this.addExerciseOption.bind(this);
-    this.exerciseNames = this.storeService.getExerciseNames();
-
-    this.exercisesSubscription = this.storeService.getExercisesObservable().subscribe(exercises => {
-         this.initFormValues(exercises);
-      }
-    )
-
+  constructor(private fb: FormBuilder, private storeService: StoreService){
+    this.addExercisesForm = this.fb.group({
+      selectorsFormArray: this.fb.array([])
+    });
   }
 
-  initFormValues(exercises: Exercise[]){
+  ngOnInit() {
+    this.exercises$ = this.storeService.getExercises$;
+    this.staticExerciseNames$ = this.storeService.getStaticExerciseNames$;
+    this.storeService.loadStaticExerciseNames();
+    this.storeService.getExercises$.pipe(
+      takeUntil(this.unsubscribe$)
+    )
+    .subscribe(exercises => {
+      this.initFormValues(exercises);
+    })
+
+    this.addExerciseOption = this.addExerciseOption.bind(this);
+  }
+
+  initFormValues(exercises: Exercise[]) {
     const exerciseFGs = exercises.map(exercise => this.createExerciseFormGroup(exercise));
-    const exerciseFormArray = this.fb.array(exerciseFGs);
-    this.addExercisesForm = this.fb.group({
-      selectorsFormArray: exerciseFormArray
-    });
+    this.addExercisesForm.setControl('selectorsFormArray', this.fb.array(exerciseFGs));
   }
 
   createExerciseFormGroup(exercise: Exercise): FormGroup {
     return this.fb.group({
       exerciseOption: [exercise],
-    });
-  }
-
-  createSelectorFormControl() {
-    const exerciseOption = this.storeService.createExercise(generateGuid(), this.exerciseNames[0]);
-    return this.fb.group({
-      exerciseOption: [exerciseOption],
+      uuid: exercise.uuid
     });
   }
 
@@ -62,22 +61,21 @@ export class AddExercisesComponent {
     return this.addExercisesForm.controls["selectorsFormArray"] as FormArray;
   }
 
-  addExerciseOption(exercise: string) {
-    this.storeService.updateStaticExerciseData(exercise).pipe(take(1)).subscribe(res => {
+  addExerciseOption = (exerciseName: string) => {
+    this.storeService.addStaticExercise(exerciseName);
 
     const newExercise: Exercise = {
       uuid: generateGuid(),
-      name: exercise,
+      name: exerciseName,
       targetSets: 1,
       targetRepsPerSet: 1,
-      completedSets: [{reps: null, intensity: null, weight: null}]
+      completedSets: [],
+      pending: false,
+      complete: false
     };
 
-    this.exerciseNames = [...this.exerciseNames, exercise];
-    const exercisesToUpdate = [...this.storeService.getExercises(), newExercise];
-    this.storeService.updateExercises(exercisesToUpdate);
-    });
-
+    this.storeService.addExercise(newExercise);
+    return newExercise;
   }
 
   deleteExercise(index: number){
@@ -89,36 +87,45 @@ export class AddExercisesComponent {
   }
 
   addExerciseSelector() {
-    this.selectorsFormArray.push(this.createSelectorFormControl());
-    }
+    this.selectorsFormArray.push(this.createExerciseFormGroup({
+      uuid: generateGuid(),
+      name: '',
+      targetSets: 1,
+      targetRepsPerSet: 1,
+      completedSets: [],
+      pending: false,
+      complete: false
+    }));
+  }
 
 
-  save(){
+  save() {
     const formValues = this.addExercisesForm.value;
-    const existingExercises = this.storeService.getExercises();
+    const exercises: Exercise[] = formValues.selectorsFormArray.map((selector: any) => ({
+      uuid: selector.uuid,
+      name: selector.exerciseOption,
+      targetSets: 1,
+      //targetSets: selector.targetSets,
+      targetRepsPerSet: 1,
+      //targetRepsPerSet: selector.targetRepsPerSet,
+      completedSets: [], // You might want to preserve existing completedSets for existing exercises
+      pending: false,
+      complete: false
+    }));
 
-    const exerciseData = formValues.selectorsFormArray.map((selector: any) => {
-      return {
-        uuid: selector.exerciseOption.uuid,
-        name: selector.exerciseOption.name
-      };
+    exercises.forEach(exercise => {
+      if (this.storeService.exerciseExists(exercise.uuid)) {
+        this.storeService.updateExercise(exercise);
+      } else {
+        this.storeService.addExercise(exercise);
+      }
     });
 
-    exerciseData.forEach(exercise => {
-      const existingExercise = existingExercises.find((e) => e.uuid == exercise.uuid);
-      if (existingExercise){
-        existingExercise.name = exercise.name;
-      }else{
-        existingExercises.push(this.storeService.createExercise(exercise.uuid, exercise.name));
-      }
-    })
-
-    this.storeService.updateExercises(existingExercises);
     this.toggleShowForm();
   }
 
   ngOnDestroy() {
-    this.staticExerciseSubscription.unsubscribe();
-    this.exercisesSubscription.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

@@ -4,9 +4,10 @@
       <div formArrayName="selectorsFormArray">
         <div *ngFor="let selectorControl of selectorsFormArray.controls; let i = index" [formGroupName]="i">
             <div class="flex flex-col">
+              <input type="hidden" formControlName="uuid">
               <span class="label-text">Select an exercise or type to search</span>
               <div class="flex flex-row items-center">
-              <ng-select [items]="exerciseNames"
+              <ng-select [items]="staticExerciseNames$ | async"
               formControlName="exerciseOption"
               class="w-full py-2 mb-1 bg-neutral-content rounded-lg"
               notFoundText="No exercise found"

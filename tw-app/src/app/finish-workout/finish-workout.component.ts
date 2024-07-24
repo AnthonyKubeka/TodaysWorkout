@@ -16,11 +16,11 @@ import { ButtonStandardComponent } from '../common/button-standard/button-standa
 })
 export class FinishWorkoutComponent {
 
-  exercises$: Observable<Exercise[]> = of([]);
+  exercises$: Observable<Exercise[]>;
   constructor(private storeService: StoreService, private navigateService: NavigateService){}
 
   ngOnInit() {
-    this.exercises$ = this.storeService.getExercisesObservable();
+    this.exercises$ = this.storeService.getExercises$;
   }
 
   back(){

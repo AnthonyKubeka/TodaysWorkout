@@ -5,7 +5,7 @@ import { Component } from '@angular/core';
 import { AbstractControl, FormArray, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgIconComponent, provideIcons } from '@ng-icons/core';
 import { ionInformationCircleOutline } from '@ng-icons/ionicons';
-import { Subscription, map } from 'rxjs';
+import { Observable, Subject, Subscription, map, takeUntil } from 'rxjs';
 import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
 import { Exercise } from '../common/exercise';
 import { NavigateService } from '../common/navigate.service';
@@ -23,23 +23,25 @@ import { ViewEnum } from '../common/view.enum';
 export class WorkoutComponent {
 
   workoutForm!: FormGroup;
-  exercisesSubscription: Subscription;
-  exercises: Exercise[];
+  exercises$: Observable<Exercise[]>;
+  private unsubscribe$ = new Subject<void>();
+
   constructor(private storeService: StoreService, private fb: FormBuilder, private navigateService: NavigateService){}
 
   ngOnInit() {
+    this.exercises$ = this.storeService.getExercises$;
 
-    this.exercisesSubscription = this.storeService.getExercisesObservable().subscribe(exercises => {
-      if (exercises){
+    this.exercises$
+    .pipe(takeUntil(this.unsubscribe$))
+    .subscribe(exercises => {
+      if (exercises && exercises.length > 0){
         this.initFormValues(exercises);
-        this.exercises = exercises;
       }
-   });
-
+    })
   }
 
   get stepsFormArray(){
-    return this.workoutForm.controls["stepsFormArray"] as FormArray;
+    return this.workoutForm.get('stepsFormArray') as FormArray;
   }
 
   initFormValues(exercises: Exercise[]){
@@ -48,9 +50,8 @@ export class WorkoutComponent {
     }
 
     const stepFormGroups = exercises.map(exercise => this.createStepFormGroup(exercise));
-    const stepsFormArray = this.fb.array(stepFormGroups);
     this.workoutForm = this.fb.group({
-      stepsFormArray: stepsFormArray
+      stepsFormArray: this.fb.array(stepFormGroups)
     });
   }
 
@@ -66,7 +67,7 @@ export class WorkoutComponent {
   }
 
   initStepInformation(exercise: Exercise): FormGroup[] {
-    return Array.from({ length: exercise.targetSets }).map((element, index) => {
+    return Array.from({ length: exercise.targetSets }).map((_, index) => {
       const set = exercise.completedSets && exercise.completedSets[index];
       return this.fb.group({
         repsCompleted: [set ? set.reps : null],
@@ -92,6 +93,7 @@ export class WorkoutComponent {
     const formValues = this.workoutForm.value;
     const exercisesToSave: Exercise[] = formValues.stepsFormArray.map((step: any) => {
       return {
+        uuid:step.uuid,
         name: step.exercise,
         targetRepsPerSet: step.targetRepsPerSet,
         targetSets: step.targetSets,
@@ -105,7 +107,9 @@ export class WorkoutComponent {
       };
     });
 
-    this.storeService.updateExercises(exercisesToSave);
+    exercisesToSave.forEach(exercise => {
+      this.storeService.updateExercise(exercise);
+    });
   }
 
   createStepInformationControl() {
@@ -144,6 +148,7 @@ export class WorkoutComponent {
   }
 
   ngOnDestroy() {
-    this.exercisesSubscription.unsubscribe();
+    this.unsubscribe$.next();
+    this.unsubscribe$.complete();
   }
 }

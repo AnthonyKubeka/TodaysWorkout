@@ -1,38 +1,49 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, catchError, map, of, tap } from 'rxjs';
+import { BehaviorSubject, Observable, catchError, map, of, tap, take } from 'rxjs';
 import { Exercise } from './exercise';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { generateGuid } from './utils';
+import { ExerciseState } from './exercise-state.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoreService {
+  private state$ = new BehaviorSubject<ExerciseState>({
+    exercises: [],
+    staticExerciseNames: []
+  });
 
-  private staticExercisesNamesSubject = new BehaviorSubject<string[]>([]); //private to Store and has 'memory'
-  private exercisesSubject = new BehaviorSubject<Exercise[]>([]);
-  private exercises$ = this.exercisesSubject.asObservable();
-  isAtLeastOneExerciseAdded = false;
+  getExercises$ = this.state$.pipe(map(state => state.exercises));
+  getStaticExerciseNames$ = this.state$.pipe(map(state => state.staticExerciseNames));
+
+  isAtLeastOneExerciseAdded$ = this.state$.pipe(map(state => state.exercises.length > 0));
   readonly defaultNumberOfSetsOrReps = 1;
 
   constructor(private httpClient: HttpClient) {
   }
 
   init() {
-    const staticExercisesReq$ = this.getStaticExerciseNames();
-
-    staticExercisesReq$.subscribe({
-      next: (exerciseNames: string[]) => {
-        this.staticExercisesNamesSubject.next(exerciseNames);
-      },
-      error: (error) => {
-        console.error('Could not fetch static data due to error:', error);
-      }
-    }
-    );
+    this.loadStaticExerciseNames().pipe(
+      tap(names => {
+        this.state$.next({
+          ...this.state$.value,
+          staticExerciseNames: names
+        })
+      })
+    ).subscribe({
+      next: () => console.log('Static exercise names loaded'),
+      error: (error) => console.error('Error loading static exercise names:', error),
+      complete: () => console.log('Static exercise names loading completed')
+    });
   }
 
-   getStaticExerciseNames(): Observable<string[]> {
+  exerciseExists(uuid: string): boolean {
+    const currentState = this.state$.getValue();
+    return currentState.exercises.some(exercise => exercise.uuid === uuid);
+  }
+
+   loadStaticExerciseNames(): Observable<string[]> {
     let headers: HttpHeaders = new HttpHeaders();
     headers = headers.append('Accept', 'application/json');
 
@@ -41,11 +52,11 @@ export class StoreService {
       { headers: headers }
     ).pipe(
       map((res: any[]) => res.map(item => item.name))
-    );
+    )
   }
 
 
-  updateStaticExerciseData(exerciseName: string): Observable<any> {
+  addStaticExercise(exerciseName: string): Observable<any> {
     let headers = new HttpHeaders({'Content-Type': 'application/json'});
     headers = headers.append('Accept', 'application/json');
 
@@ -71,9 +82,9 @@ export class StoreService {
       complete: false
     };
 
-    let exercises = this.getExercises();
-    exercises.push(newExercise);
-    this.exercisesSubject.next(exercises);
+    // let exercises = this.getExercises();
+    // exercises.push(newExercise);
+    // this.state$.next(exercises);
   }
 
   createExercise(uuid: string, name: string): Exercise {
@@ -88,32 +99,29 @@ export class StoreService {
     };
   }
 
-  updateExercises(exercises: Exercise[]){
-    this.exercisesSubject.next(exercises);
+  updateExercise(updatedExercise: Exercise){
+    this.state$.pipe(
+      take(1),
+      tap(state => {
+        const updatedExercise = state.exercises.map(ex => ex.uuid === updatedExercise.uuid ? updatedExercise : ex);
+        this.state$.next({
+          ...state,
+          exercises: updatedExercise
+        });
+      })
+    )
   }
 
-  getExerciseByUuid(uuid: string): Exercise | undefined {
-    return this.getExercises().find(exercise => exercise.uuid === uuid);
-  }
-
-  updateExercise(uuid: string, updatedExercise: Partial<Exercise>) {
-    const exercise = this.getExerciseByUuid(uuid);
-
-    if (exercise){
-      Object.assign(exercise, updatedExercise);
-    }
-  }
-
-  getExerciseNames(): string[] {
-    return this.staticExercisesNamesSubject.getValue();
-  }
-
-  getExercisesObservable(): Observable<Exercise[]> {
-    return this.exercises$;
-  }
-
-  getExercises(): Exercise[] {
-    return this.exercisesSubject.getValue();
+  addExercise(exercise: Exercise) {
+    this.state$.pipe(
+      take(1),
+      tap(state => {
+        this.state$.next({
+          ...state,
+          exercises: [...state.exercises, exercise]
+        });
+      })
+    ).subscribe();
   }
 
   getExercisesFake(): Observable<Exercise[]>{

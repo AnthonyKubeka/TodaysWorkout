@@ -6,11 +6,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewEnum } from '../common/view.enum';
 import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
-
+import { ButtonSleekComponent } from '../common/button-sleek/button-sleek.component';
 @Component({
   selector: 'app-finish-workout',
   standalone: true,
-  imports: [CommonModule, ButtonStandardComponent],
+  imports: [CommonModule, ButtonStandardComponent, ButtonSleekComponent],
   templateUrl: './finish-workout.component.html',
   styleUrl: './finish-workout.component.css'
 })
@@ -20,7 +20,7 @@ export class FinishWorkoutComponent {
   constructor(private storeService: StoreService, private navigateService: NavigateService){}
 
   ngOnInit() {
-    this.exercises$ = this.storeService.getExercises();
+    this.exercises$ = this.storeService.getExercisesFake();
   }
 
   back(){

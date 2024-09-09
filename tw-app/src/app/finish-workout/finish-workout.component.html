@@ -10,6 +10,7 @@
           <th>Set</th>
           <th>Reps Completed</th>
           <th>Intensity</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>
@@ -21,13 +22,17 @@
             <td>{{ setIndex + 1 }}</td>
             <td>{{ set.reps }}</td>
             <td>{{ set.intensity }}</td>
+            <td><app-button-standard [text]="'Add Set'" *ngIf="setIndex === 0"></app-button-standard></td>
           </tr>
         </ng-container>
       </tbody>
     </table>
+    <app-button-sleek [text]="'Add Exercise'"></app-button-sleek>
     <app-button-standard [text]="'Copy to clipboard'" (click)="copyToClipboard()"/>
     <app-button-standard [text]="'Export To CSV'" (click)="exportToCsv()"/>
     <app-button-standard [text]="'Go Back'" (click)="back()"/>
   </div>
-
+<!--TODO: Decrease scope:
+Turn all search boxes into plain inputs i.e. just input exercise names
+Make it as simple as possible for now-->
 </div>

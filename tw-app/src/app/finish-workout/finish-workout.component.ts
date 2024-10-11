@@ -7,24 +7,74 @@ import { CommonModule } from '@angular/common';
 import { ViewEnum } from '../common/view.enum';
 import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
 import { ButtonSleekComponent } from '../common/button-sleek/button-sleek.component';
+import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, FormArray } from '@angular/forms';
 @Component({
   selector: 'app-finish-workout',
   standalone: true,
-  imports: [CommonModule, ButtonStandardComponent, ButtonSleekComponent],
+  imports: [CommonModule, ButtonStandardComponent, ButtonSleekComponent, FormsModule, ReactiveFormsModule],
   templateUrl: './finish-workout.component.html',
   styleUrl: './finish-workout.component.css'
 })
 export class FinishWorkoutComponent {
+addSet(_t22: number) {
+throw new Error('Method not implemented.');
+}
+addExercise() {
+throw new Error('Method not implemented.');
+}
 
   exercises$: Observable<Exercise[]> = of([]);
-  constructor(private storeService: StoreService, private navigateService: NavigateService){}
+  exerciseForm: FormGroup;
+  constructor(private storeService: StoreService, private navigateService: NavigateService, private fb: FormBuilder){}
 
   ngOnInit() {
     this.exercises$ = this.storeService.getExercisesFake();
+    this.exercises$.subscribe(exercises => {
+      if (exercises){
+        this.initForm(exercises)
+        console.log('Exercises: ', exercises);
+      }
+    })
+  }
+
+  get exercisesFormArray(): FormArray {
+    return this.exerciseForm.controls["exercisesFormArray"] as FormArray;
+  }
+
+  getSetsFormArray(index: number): FormArray {
+    return this.exercisesFormArray.at(index).get('setsFormArray') as FormArray;
   }
 
   back(){
     this.navigateService.navigateTo(ViewEnum.Workout);
+  }
+
+  initForm(exercises: Exercise[]){
+    let exerciseFormGroups = exercises.map(exercise => this.createExerciseFormGroup(exercise));
+    this.exerciseForm = this.fb.group({
+      exercisesFormArray: this.fb.array(exerciseFormGroups)
+    })
+  }
+
+  createExerciseFormGroup(exercise: Exercise): FormGroup {
+    return this.fb.group({
+      name: exercise.name,
+      targetRepsPerSet: exercise.targetRepsPerSet,
+      sets: exercise.targetSets,
+      completedSets: exercise.completedSets,
+      setsFormArray: this.fb.array(this.createExerciseSetsFormGroup(exercise))
+    })
+  }
+
+  createExerciseSetsFormGroup(exercise: Exercise): FormGroup[] {
+    return Array.from({ length: exercise.targetSets }).map((_, index) => {
+      const set = exercise.completedSets && exercise.completedSets[index];
+      return this.fb.group({
+        repsCompleted: [set ? set.reps : null],
+        intensity: [set ? set.intensity : null],
+        weight: [set ? set.weight: null]
+      });
+    });
   }
 
   getExerciseString(exercise: Exercise): string {

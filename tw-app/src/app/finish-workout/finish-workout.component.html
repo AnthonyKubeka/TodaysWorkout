@@ -1,38 +1,44 @@
-<div class="flex flex-col items-center justify-center h-screen">
+<div [formGroup]="exerciseForm" class="flex flex-col items-center h-screen">
   <h1 class="text-4xl font-bold uppercase mb-8 text-center">Workout Summary</h1>
-
-  <div class="overflow-x-auto">
-    <table class="table table-zebra">
-      <thead>
-        <tr>
-          <th></th>
-          <th>Exercise</th>
-          <th>Set</th>
-          <th>Reps Completed</th>
-          <th>Intensity</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <ng-container *ngFor="let exercise of exercises$ | async; let i = index">
-          <tr *ngFor="let set of exercise.completedSets; let setIndex = index">
-            <th></th>
-            <td *ngIf="setIndex === 0">{{ exercise.name }}</td>
-            <td *ngIf="setIndex !== 0"></td>
-            <td>{{ setIndex + 1 }}</td>
-            <td>{{ set.reps }}</td>
-            <td>{{ set.intensity }}</td>
-            <td><app-button-standard [text]="'Add Set'" *ngIf="setIndex === 0"></app-button-standard></td>
+  <div formArrayName="exercisesFormArray" class="overflow-x-auto">
+    <ng-container *ngFor="let exerciseGroup of exercisesFormArray.controls; let i = index" [formGroupName]="i">
+      <h4 class="text-center">{{exerciseGroup.get('name')?.value}}</h4>
+      <table class="table table-zebra">
+        <thead>
+          <tr>
+            <th>Set</th>
+            <th>Reps Completed</th>
+            <th>Intensity</th>
           </tr>
+        </thead>
+        <ng-container formArrayName="setsFormArray">
+          <ng-container *ngFor="let setsGroup of getSetsFormArray(i).controls; let setIndex = index" [formGroupName]="setIndex">
+            <tbody>
+              <tr >
+                <td>{{ setIndex + 1 }}</td>
+                <td><input formControlName="repsCompleted" placeholder="Reps Completed" class="input input-bordered"/></td>
+                <td><input formControlName="intensity" placeholder="Intensity" class="input input-bordered"/></td>
+              </tr>
+            </tbody>
+          </ng-container>
         </ng-container>
-      </tbody>
-    </table>
-    <app-button-sleek [text]="'Add Exercise'"></app-button-sleek>
-    <app-button-standard [text]="'Copy to clipboard'" (click)="copyToClipboard()"/>
-    <app-button-standard [text]="'Export To CSV'" (click)="exportToCsv()"/>
-    <app-button-standard [text]="'Go Back'" (click)="back()"/>
+      </table>
+      <div class="flex justify-center mt-4">
+        <app-button-sleek class="text-center" [text]="'Add Set'"></app-button-sleek>
+      </div>
+   </ng-container>
   </div>
-<!--TODO: Decrease scope:
-Turn all search boxes into plain inputs i.e. just input exercise names
-Make it as simple as possible for now-->
+    <app-button-sleek [text]="'Add Exercise'" (click)="addExercise()"></app-button-sleek>
+   <!-- <app-button-standard [text]="'Copy to clipboard'" (click)="copyToClipboard()"></app-button-standard>
+    <app-button-standard [text]="'Export To CSV'" (click)="exportToCsv()"></app-button-standard>
+    <app-button-standard [text]="'Go Back'" (click)="back()"></app-button-standard>
+    -->
+
 </div>
+
+
+<!--
+ExerciseForm:
+  ExercisesFormArray
+    SetsFormArray
+-->

@@ -1,24 +1,21 @@
-import { AddExercisesComponent } from '../add-exercises/add-exercises.component';
-import { NavigateService } from '../common/navigate.service';
-import { ViewEnum } from './../common/view.enum';
-import { Component, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Component, ViewChild } from '@angular/core';
+
 import { ButtonStandardComponent } from '../common/button-standard/button-standard.component';
+import { NavigateService } from '../common/navigate.service';
 import { StoreService } from '../common/store.service';
-import { take } from 'rxjs';
+import { ViewEnum } from './../common/view.enum';
 
 @Component({
   selector: 'app-build',
   standalone: true,
-  imports: [AddExercisesComponent, CommonModule, ButtonStandardComponent],
+  imports: [CommonModule, ButtonStandardComponent],
   templateUrl: './build.component.html',
   styleUrl: './build.component.css'
 })
 export class BuildComponent {
 
   ViewEnum = ViewEnum;
-  @ViewChild(AddExercisesComponent)
-  addExercisesComponent: AddExercisesComponent | undefined;
   constructor(private navigateService: NavigateService, private storeService: StoreService) {}
 
   get isAtLeastOneExerciseAdded(): boolean {
@@ -31,10 +28,5 @@ export class BuildComponent {
     }
 
     this.navigateService.navigateTo(ViewEnum.Workout);
-  }
-
-  showForm(){
-    if (this.addExercisesComponent)
-      this.addExercisesComponent.toggleShowForm();
   }
 }

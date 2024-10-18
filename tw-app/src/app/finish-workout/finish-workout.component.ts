@@ -16,13 +16,6 @@ import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, FormArray } f
   styleUrl: './finish-workout.component.css'
 })
 export class FinishWorkoutComponent {
-addSet(_t22: number) {
-throw new Error('Method not implemented.');
-}
-addExercise() {
-throw new Error('Method not implemented.');
-}
-
   exercises$: Observable<Exercise[]> = of([]);
   exerciseForm: FormGroup;
   constructor(private storeService: StoreService, private navigateService: NavigateService, private fb: FormBuilder){}
@@ -48,6 +41,15 @@ throw new Error('Method not implemented.');
   back(){
     this.navigateService.navigateTo(ViewEnum.Workout);
   }
+
+  addSet(index: number) {
+    const setsFormArray = this.getSetsFormArray(index);
+    setsFormArray.push(this.createBlankExerciseSetFormGroup())
+    }
+
+  addExercise() {
+    this.exercisesFormArray.push(this.createBlankExerciseSetFormGroup())
+    }
 
   initForm(exercises: Exercise[]){
     let exerciseFormGroups = exercises.map(exercise => this.createExerciseFormGroup(exercise));
@@ -75,6 +77,26 @@ throw new Error('Method not implemented.');
         weight: [set ? set.weight: null]
       });
     });
+  }
+
+  createBlankExerciseSetFormGroup(): FormGroup {
+      return this.fb.group({
+        repsCompleted: [],
+        intensity: [],
+        weight: []
+      });
+  }
+
+  createBlankExerciseFormGroup(): FormGroup {
+    let formGroup = this.fb.group({
+      name: [],
+      targetRepsPerSet: 1,
+      sets: 1,
+      completedSets: 1,
+      setsFormArray: this.fb.array([this.createBlankExerciseSetFormGroup()])
+    });
+
+    return formGroup;
   }
 
   getExerciseString(exercise: Exercise): string {

@@ -2,7 +2,7 @@
   <h1 class="text-4xl font-bold uppercase mb-8 text-center">Workout Summary</h1>
   <div formArrayName="exercisesFormArray" class="overflow-x-auto">
     <ng-container *ngFor="let exerciseGroup of exercisesFormArray.controls; let i = index" [formGroupName]="i">
-      <h4 class="text-center">{{exerciseGroup.get('name')?.value}}</h4>
+      <input formControlName="name" placeholder="Exercise Name" class="input"/>
       <table class="table table-zebra">
         <thead>
           <tr>
@@ -24,7 +24,7 @@
         </ng-container>
       </table>
       <div class="flex justify-center mt-4">
-        <app-button-sleek class="text-center" [text]="'Add Set'"></app-button-sleek>
+        <app-button-sleek class="text-center" [text]="'Add Set'" (click)="addSet(i)"></app-button-sleek>
       </div>
    </ng-container>
   </div>

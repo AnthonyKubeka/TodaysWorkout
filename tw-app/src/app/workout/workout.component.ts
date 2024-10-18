@@ -1,7 +1,7 @@
-import { NavigateService } from './../common/navigate.service';
-import { Exercise } from './../common/exercise';
+import { NavigateService } from '../common/navigate.service';
+import { Exercise } from '../common/exercise';
 import { Observable, Subscription, map, of, take } from 'rxjs';
-import { StoreService } from './../common/store.service';
+import { StoreService } from '../common/store.service';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ViewEnum } from '../common/view.enum';
@@ -9,13 +9,13 @@ import { ButtonStandardComponent } from '../common/button-standard/button-standa
 import { ButtonSleekComponent } from '../common/button-sleek/button-sleek.component';
 import { FormGroup, FormsModule, ReactiveFormsModule, FormBuilder, FormArray } from '@angular/forms';
 @Component({
-  selector: 'app-finish-workout',
+  selector: 'app-workout',
   standalone: true,
   imports: [CommonModule, ButtonStandardComponent, ButtonSleekComponent, FormsModule, ReactiveFormsModule],
-  templateUrl: './finish-workout.component.html',
-  styleUrl: './finish-workout.component.css'
+  templateUrl: './workout.component.html',
+  styleUrl: './workout.component.css'
 })
-export class FinishWorkoutComponent {
+export class WorkoutComponent {
   exercises$: Observable<Exercise[]> = of([]);
   exerciseForm: FormGroup;
   constructor(private storeService: StoreService, private navigateService: NavigateService, private fb: FormBuilder){}
@@ -48,7 +48,7 @@ export class FinishWorkoutComponent {
     }
 
   addExercise() {
-    this.exercisesFormArray.push(this.createBlankExerciseSetFormGroup())
+    this.exercisesFormArray.push(this.createBlankExerciseFormGroup())
     }
 
   initForm(exercises: Exercise[]){

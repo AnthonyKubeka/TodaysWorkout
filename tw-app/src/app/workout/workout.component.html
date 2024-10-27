@@ -1,5 +1,5 @@
 <div [formGroup]="exerciseForm" class="flex flex-col items-center h-screen">
-  <h1 class="text-4xl font-bold uppercase mb-8 text-center">Workout Summary</h1>
+  <h1 class="text-4xl font-bold uppercase mb-8 text-center">Workout</h1>
   <div formArrayName="exercisesFormArray" class="overflow-x-auto">
     <ng-container *ngFor="let exerciseGroup of exercisesFormArray.controls; let i = index" [formGroupName]="i">
       <input formControlName="name" placeholder="Exercise Name" class="input"/>
@@ -31,16 +31,9 @@
    </ng-container>
   </div>
     <app-button-sleek [text]="'Add Exercise'" (click)="addExercise()"></app-button-sleek>
-   <!-- <app-button-standard [text]="'Copy to clipboard'" (click)="copyToClipboard()"></app-button-standard>
-    <app-button-standard [text]="'Export To CSV'" (click)="exportToCsv()"></app-button-standard>
-    <app-button-standard [text]="'Go Back'" (click)="back()"></app-button-standard>
-    -->
+    <app-button-standard [text]="'Copy to clipboard'" *ngIf="exercisesFormArray.length > 0" (click)="copyToClipboard()"></app-button-standard>
+    <app-button-standard [text]="'Export To CSV'" *ngIf="exercisesFormArray.length > 0" (click)="exportToCsv()"></app-button-standard>
+
+    <!--<app-button-standard [text]="'Go Back'" (click)="back()"></app-button-standard>-->
 
 </div>
-
-
-<!--
-ExerciseForm:
-  ExercisesFormArray
-    SetsFormArray
--->

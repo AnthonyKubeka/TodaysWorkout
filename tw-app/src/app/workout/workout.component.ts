@@ -1,6 +1,6 @@
 import { NavigateService } from '../common/navigate.service';
 import { Exercise } from '../common/exercise';
-import { Observable, Subscription, map, of, take } from 'rxjs';
+import { Observable, Subscription, debounceTime, map, of, take, tap } from 'rxjs';
 import { StoreService } from '../common/store.service';
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -21,13 +21,20 @@ export class WorkoutComponent {
   constructor(private storeService: StoreService, private navigateService: NavigateService, private fb: FormBuilder){}
 
   ngOnInit() {
-    this.exercises$ = this.storeService.getExercisesFake();
+    this.exercises$ = this.storeService.getExercises();
     this.exercises$.subscribe(exercises => {
       if (exercises){
         this.initForm(exercises)
-        console.log('Exercises: ', exercises);
       }
     })
+
+    this.exerciseForm.get('exercisesFormArray').valueChanges
+    .pipe(debounceTime(500),
+  )
+    .subscribe(newFormValue => {
+      const updatedExercises = this.mapFormValueToExercises(newFormValue);
+      this.storeService.updateExercises(updatedExercises);
+    });
   }
 
   get exercisesFormArray(): FormArray {
@@ -56,6 +63,21 @@ export class WorkoutComponent {
     this.exerciseForm = this.fb.group({
       exercisesFormArray: this.fb.array(exerciseFormGroups)
     })
+  }
+
+  mapFormValueToExercises(formValue: any): Exercise[] {
+    return formValue.exercisesFormArray.map((exerciseFormValue: any) => ({
+      name: exerciseFormValue.name,
+      targetSets: exerciseFormValue.sets,
+      targetRepsPerSet: exerciseFormValue.targetRepsPerSet,
+      completedSets: exerciseFormValue.setsFormArray.map((setFormValue: any) => ({
+        reps: setFormValue.repsCompleted,
+        intensity: setFormValue.intensity,
+        weight: setFormValue.weight
+      })),
+      pending: false,
+      complete: false
+    }));
   }
 
   createExerciseFormGroup(exercise: Exercise): FormGroup {
